@@ -8,7 +8,7 @@ import Tab from '../../components/tab/Tab';
 
 function MainPage() {
   return (
-    <div className='h-screen w-screen'>
+    <div className='w-full h-full'>
       <div><Header></Header></div>
       <div className='flex justify-center'>
         <Banner size="full" bannerColor='secondary' txt="프로젝트 팀원을 모집해보세요." txtColor='white'>{"협업을 통한 경험 노하우 쌓기!"}</Banner>
@@ -35,6 +35,10 @@ function MainPage() {
       
       <div>
         {/* 여기에 페이지 div */}
+        <Btn size="small" txt='안녕하세요1'/>
+        <Btn size="default" txt='안녕하세요2'/>
+        <Btn size="big" txt='안녕하세요3'/>
+        <Btn size="default" txt='안녕하세요4'/>
       </div>
     </div>
   );

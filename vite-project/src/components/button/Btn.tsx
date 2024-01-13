@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import './style.css';
 
 interface ButtonProps {
   buttonColor?: "primary" | "secondary" | "headerBtn" | "error";
   category?: "outlined" | "text";
   backimage?: string | undefined;
   size?: "small" | "default" | "big";
+  fullWidth?: boolean;
   handleBtn?: () => void;
   txt?: string;
   txtColor?: string;
@@ -33,6 +35,7 @@ function Btn({
   category = "outlined",
   backimage = undefined,
   size = "default",
+  fullWidth = false,
   handleBtn = undefined,
   txt = undefined,
   txtColor = "white",
@@ -48,9 +51,7 @@ function Btn({
     let border = "";
     let backgroundImage = "";
     let backgroundSize = "auto";
-    let textSize = "1rem";
-
-    const fontWeight = "bold";
+    // let textSize = "1rem";
     const textColor = txtColor;
     switch (buttonColor) {
       case "primary":
@@ -86,22 +87,23 @@ function Btn({
         backgroundSize = "contain";
         break;
     }
-    switch (size) {
-      case "small":
-        width = "100%";
-        height = "2rem";
-        textSize = "0.7rem";
-        break;
-      case "default":
-        width = "100%";
-        height = "3rem";
-        break;
-      case "big":
-        width = "100%";
-        height = "4rem";
-        textSize = "1.3rem";
-        break;
-    }
+    // switch (size) {
+    //   case "small":
+    //     if(fullWidth) width = "100%";
+    //     height = "2rem";
+    //     textSize = "0.7rem";
+    //     break;
+    //   case "default":
+    //     if(fullWidth) width = "100%";
+    //     height = "3rem";
+    //     break;
+    //   case "big":
+    //     if(fullWidth) width = "100%";
+    //     height = "4rem";
+    //     textSize = "1.3rem";
+    //     break;
+    // }
+
     setStyle({
       backgroundColor,
       width,
@@ -109,21 +111,22 @@ function Btn({
       border,
       backgroundImage,
       backgroundSize,
-      borderRadius: "0.25rem",
       cursor: "pointer",
+      // fontSize: textSize,
+
+      color: textColor,
     });
     setTxtStyle({
-      fontSize: textSize,
 
-      fontWeight,
-      color: textColor,
     });
   }, [buttonColor, category, backimage, size, txtColor]);
 
+  const sizeClass = `btn-size-${size}`;
+
   return (
-    <div onClick={handleBtn} style={style} className={`flex items-center justify-center ${className}`}>
+    <span onClick={handleBtn} style={style} className={`btn inline-flex items-center justify-center ${className} ${sizeClass}`}>
       <span style={txtStyle}>{txt}</span>
-    </div>
+    </span>
   );
 }
 

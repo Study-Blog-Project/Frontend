@@ -1,0 +1,18 @@
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+    @apply font-bold rounded-md;
+}
+
+.btn.btn-size-small {
+    @apply text-xs px-2 py-1;
+}
+
+.btn.btn-size-default {
+    @apply flex-1 px-2 py-2;
+}
+
+.btn.btn-size-big {
+    @apply text-xl px-3 py-3;
+}
