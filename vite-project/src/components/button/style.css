@@ -9,6 +9,7 @@
     @apply text-xs px-2 py-1;
 }
 
+
 .btn.btn-size-default {
     @apply flex-1 px-2 py-2;
 }
