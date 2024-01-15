@@ -22,12 +22,13 @@ interface Divstyle {
   backgroundSize?: string | undefined;
   borderRadius?: string | undefined;
   cursor?: string | undefined;
+  color?: string;
 }
 
 interface textStyle {
   fontSize?: string;
   fontWeight?: string;
-  color?: string;
+
 }
 
 function Btn({
@@ -35,7 +36,7 @@ function Btn({
   category = "outlined",
   backimage = undefined,
   size = "default",
-  fullWidth = false,
+
   handleBtn = undefined,
   txt = undefined,
   txtColor = "white",
