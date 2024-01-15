@@ -16,26 +16,26 @@ function PostDiv(props: PostDivProps) {
   
   return (
     //배경색 빨강은 제거예정
-    <div className="w-full h-full bg-red-100  border-b border-solid border-black sm:w-full h-full md:w-full lg:w-full xl:w-full flex flex-col">
-      <div className='flex justify-between'>
-        <div className='flex justify-between'>
-          {firstPin && <Pin pinColor={firstPin.pinColor} txt={firstPin.txt}/>}
+    <div className="w-full h-full bg-red-100 px-2 py-2 border-b border-solid border-black sm:w-full md:w-full lg:w-full xl:w-full flex flex-col">
+      <div className='flex '>
+        <div className='ml-2  flex justify-between'>
+          {firstPin && <Pin className="mr-2"pinColor={firstPin.pinColor} txt={firstPin.txt}/>}
           {secondPin && <Pin pinColor={secondPin.pinColor} txt={secondPin.txt}/>}
         </div>
-        <div>
+        <div className='ml-10'>
           <span>{title}</span>
         </div>
       </div>
-      <div>
+      <div className='ml-2 mt-2'>
         <span>{content}</span>
       </div>
       <div className='flex justify-between'>
-        <div>
-          <span>{id}</span>
+        <div className='ml-2 mt-2'>
+          <span className='mr-4'>{id}</span>
           <span>{time}</span>
         </div>
-        <div>
-          <span>{view}</span>
+        <div className='mr-2'>
+          <span className='mr-4'>{view}</span>
           <span>{comment}</span>
         </div>
       </div>

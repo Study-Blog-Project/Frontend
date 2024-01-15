@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect } from 'react'
 import Btn from '../button/Btn';
 
 function Header() {
   //토큰받으면 useeffect로 회원인지 검사하는 로직추가
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const isLogin = true;
+  //const [isLogin, setIsLogin] = useState<boolean>(true);
   
   useEffect(()=>{
-    let border="";
+    //let border="";
 
   },[isLogin])
   return (
-    <div className='flex justify-between items-center'  style={{ borderBottom: '2px solid #B3B3B3' }}>
+    <div className='flex justify-between items-center px-2 py-2 mb-2'  style={{ borderBottom: '2px solid #B3B3B3' }}>
       {!isLogin && <div>
         이미지
       </div>}

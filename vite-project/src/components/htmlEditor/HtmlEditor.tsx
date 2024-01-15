@@ -1,28 +1,36 @@
-import React, { useEffect, useRef } from 'react';
-import Editor from '@toast-ui/editor';
+import  { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the styles
 
 function HtmlEditor() {
-  const editorRef = useRef(null);
+  const [content, setContent] = useState('');
 
-  useEffect(() => {
-    const editorInstance = new Editor({
-      el: editorRef.current,
-      toolbarItems: [
-        ['heading', 'bold', 'italic', 'strike'],
-        ['hr', 'quote'],
-        // ...
+  const modules = {
+    toolbar: {
+      container: [
+        ['image'],
+        [{ header: [1, 2, 3, 4, 5, false] }],
+        ['bold',  'italic', 'underline', 'strike', 'blockquote','link'],
       ],
-      // ...
-    });
+    },
+  };
 
-    return () => {
-      editorInstance.remove(); // 에디터 정리
-    };
-  }, []); // 한 번만 초기화
+
+  const handleChange = (value:string) => {
+    console.log(content)
+    setContent(value);
+  };
 
   return (
-    <div ref={editorRef} id="editor" style={{ height: '500px' }}>
-      {/* 에디터를 표시할 DOM 요소 */}
+    <div>
+      <ReactQuill
+      style={{ width: '100%', height: '100%' }}
+        theme="snow"
+      
+        modules={modules}
+        value={content}
+        onChange={handleChange}
+      />
     </div>
   );
 }

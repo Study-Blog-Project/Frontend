@@ -77,7 +77,7 @@ function Banner({size="default",
   },[size,bannerColor,txt,txtColor,className,handleBanner,children])
 
   return (
-    <div style={style} onClick={handleBanner} className={ `${className}`}>
+    <div style={style} onClick={handleBanner} className={ `mb-2 pl-4 py-2 ${className}`}>
       <div style={txtStyle}>{txt}</div>
       {children && <div style={{ fontSize: '14px', lineHeight: '1.15', color:"white"}} >{children}</div>}
       </div>

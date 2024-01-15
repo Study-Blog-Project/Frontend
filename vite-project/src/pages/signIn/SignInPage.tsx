@@ -7,18 +7,19 @@ function SignIn (){
     <Modal>
         <div className="relative flex flex-col border  items-center border-solid border-black z-10 bg-white rounded-3xl ">
           <div className=' py-5 text-2xl font-extrabold'>회원가입</div>
-          <div className=" flex flex-col w-2/3">
+          <div className=" flex flex-col w-full ml-10">
           <CustomLabel text={"이름"}></CustomLabel>
-            <Input></Input>
+            <Input size="full" className='mb-4'></Input>
           <CustomLabel text={"이메일"}></CustomLabel>
-            <Input></Input>
+            <Input size="full"  className='mb-4'></Input>
           <CustomLabel text={"비밀번호"}></CustomLabel>
-            <Input></Input>
+            <Input size="full"  className='mb-4'></Input>
           <CustomLabel text={"비밀번호 확인"}></CustomLabel>
-            <Input></Input>
+            <Input size="full"  className='mb-4'></Input>
           </div>
-          <Btn  txt='가입하기' size="big" >
-          </Btn>
+          <div className='w-full mb-2 pl-10 mr-10'>
+            <Btn className='w-full' txt='가입하기' size="big" ></Btn>
+          </div>
         </div>
         
     </Modal>

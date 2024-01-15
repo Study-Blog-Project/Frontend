@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import './style.css';
 interface InputProps {
   size?:"full"|"default"
   place?:string;
@@ -34,7 +34,7 @@ function Input({ place = "입력하세요" ,className="",size="default",}:InputP
   },[place,className,size])
   return (
     <>
-      <input style={style} placeholder={place} className={`rounded border border-solid border-black h-4 sm:h-1/4 md:h-1/5 py-4 my-2 ${className}`}></input>
+      <input style={style} placeholder={place} className={`rounded border border-solid border-black mr-6 py-4 my-1 ${className}`}></input>
     </>
   )
 }

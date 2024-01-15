@@ -6,6 +6,7 @@ import WritePage from "./pages/post/WritePage";
 import TestPage from "./pages/TestPage";
 import ReadPage from "./pages/post/ReadPage";
 import MyPost from "./pages/myPage/MyPost";
+import MyInfo from "./pages/myPage/MyInfo";
 function App() {
 
 
@@ -18,6 +19,7 @@ function App() {
       <Route path="/write" element={<WritePage />}></Route>
       <Route path="/read" element={<ReadPage />}></Route>
       <Route path="/myPost" element={<MyPost />}></Route>
+      <Route path="/myInfo" element={<MyInfo />}></Route>
     </Routes>
   );
 }

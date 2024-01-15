@@ -29,7 +29,7 @@ function Pin({ pinColor = "red", txt = "default", className = "" }: PinProps) {
     const textSize = "0.9rem";
     const fontWeight = "1000";
     let txtColor = "white";
-    const borderRadius = "3rem";
+    const borderRadius = "30px";
     switch (pinColor) {
       case "red":
         backgroundColor = "#F13015";
@@ -64,9 +64,9 @@ function Pin({ pinColor = "red", txt = "default", className = "" }: PinProps) {
     });
   }, [pinColor, txt]);
   return (
-    <div style={style} className={`flex justify-center items-center ${className}`}>
+    <span style={style} className={`flex justify-center items-center ${className}`}>
       <span style={txtStyle}>{txt}</span>
-    </div>
+    </span>
   );
 }
 
