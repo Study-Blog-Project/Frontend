@@ -24,7 +24,7 @@ function MainPage() {
         <PostDiv 
           firstPin={{ pinColor: 'red', txt: '프로젝트', }}
           secondPin={{ pinColor: 'green', txt: 'CS', }}
-          title="취업 포트 폴리오용 사이드 프로젝트 프론트엔드 개발자 모집합니"
+          title="취업 포트 폴리오용 사이드 프로젝트 프론트엔드 개발자 모집합니다"
           content="본문내용본문내용본문내용본문내용본문내용본문내용본문내용본문내용본문내용본문내용"
           id="아이디"
           time="시간"
