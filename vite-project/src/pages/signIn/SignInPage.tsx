@@ -2,23 +2,76 @@
 import Modal from '../../components/modal/Modal'
 import Input from '../../components/input/Input'
 import Btn from '../../components/button/Btn'
+import {  useState } from 'react';
+import axios from 'axios';
+import { SignInInfo } from '../../components/dto/Dto';
+import { createSignInConfig } from '../../components/state/AxiosModule';
+
+
 function SignIn (){
+
+  const [signInInfo, setSignInInfo] = useState<SignInInfo>({
+    name: "",
+    pwd: "",
+    email: "",
+    checkPwd: "",
+  });
+
+  const handleInputChange = (key: keyof SignInInfo, value: string) => {
+    setSignInInfo({
+      ...signInInfo,
+      [key]: value,
+    });
+  };
+
+
+  const submitInfo = async () => {
+    const config = createSignInConfig(signInInfo); 
+    try {
+      const response = await axios(config);
+
+      if (response.data.statusCode === 200) {
+          
+        console.log('성공', response.data);
+      }
+    } catch (error: any) {
+      const { status, data } = error.response;
+
+      if (status === 404) {
+       
+        if (data.message === '사용자를 찾지 못했습니다.') {
+          console.error('사용자를 찾지 못했습니다.');
+        } else {
+          console.error(data.message);
+        }
+      }
+    }
+  };
   return (
     <Modal>
         <div className="relative flex flex-col border  items-center border-solid border-black z-10 bg-white rounded-3xl ">
           <div className=' py-5 text-2xl font-extrabold'>회원가입</div>
           <div className=" flex flex-col w-full ml-10">
           <CustomLabel text={"이름"}></CustomLabel>
-            <Input size="full" className='mb-4'></Input>
+            <Input value={signInInfo.name}
+          onChange={(value) => handleInputChange("name", value)}
+           size="full" className='mb-4'>
+           </Input>
           <CustomLabel text={"이메일"}></CustomLabel>
-            <Input size="full"  className='mb-4'></Input>
+            <Input value={signInInfo.email}
+          onChange={(value) => handleInputChange("email", value)}
+           size="full"  className='mb-4'></Input>
           <CustomLabel text={"비밀번호"}></CustomLabel>
-            <Input size="full"  className='mb-4'></Input>
+            <Input value={signInInfo.pwd}  type='password'
+          onChange={(value) => handleInputChange("pwd", value)}
+           size="full"  className='mb-4'></Input>
           <CustomLabel text={"비밀번호 확인"}></CustomLabel>
-            <Input size="full"  className='mb-4'></Input>
+            <Input value={signInInfo.checkPwd}  type='password'
+          onChange={(value) => handleInputChange("checkPwd", value)}
+           size="full"  className='mb-4'></Input>
           </div>
           <div className='w-full mb-2 pl-10 mr-10'>
-            <Btn className='w-full' txt='가입하기' size="big" ></Btn>
+            <Btn handleBtn={submitInfo} className='w-full' txt='가입하기' size="big" ></Btn>
           </div>
         </div>
         
@@ -33,4 +86,4 @@ function CustomLabel( { text }: { text: string }) {
 }
 
 
-export default SignIn
+export default SignIn;

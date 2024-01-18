@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import './style.css';
 
 interface ButtonProps {
-  buttonColor?: "primary" | "secondary" | "headerBtn" | "error";
+  buttonColor?: "primary" | "secondary" | "headerBtn" | "white";
   category?: "outlined" | "text";
   backimage?: string | undefined;
   size?: "small" | "default" | "big";
@@ -64,8 +64,8 @@ function Btn({
       case "headerBtn":
         backgroundColor = "#FF4444";
         break;
-      case "error":
-        backgroundColor = "FF0000";
+      case "white":
+        backgroundColor = "FFFFFF";
         break;
     }
     switch (category) {
