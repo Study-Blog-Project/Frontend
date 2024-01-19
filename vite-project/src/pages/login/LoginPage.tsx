@@ -2,7 +2,7 @@
 import Modal from '../../components/modal/Modal'
 import Input from '../../components/input/Input'
 import Btn from '../../components/button/Btn'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setAccessToken } from '../../components/state/TokenAction';
 import { setRefreshToken } from '../../components/state/TokenAction';
@@ -10,6 +10,11 @@ import { createLoginConfig } from '../../components/state/AxiosModule';
 import {useAuthStore} from '../../components/state/Login';
 import { LoginInfo } from '../../components/dto/Dto';
 
+const test=
+  {
+    "pwd": "1234"
+    ,"email":"2dd2dd@naver.c1om"
+}
 
 function Login() {
   const {isLogin, login } = useAuthStore();
@@ -24,9 +29,12 @@ function Login() {
       [key]: value,
     });
   };
-
+  useEffect(()=>{
+    console.log(isLogin)
+  },[isLogin])
+  
   const submitInfo = async () => {
-    const config = createLoginConfig(loginInfo); 
+    const config = createLoginConfig(test); 
     try {
       const response = await axios(config);
 
@@ -39,7 +47,7 @@ function Login() {
         setRefreshToken(refreshToken)
         console.log(isLogin);
         login();
-        console.log(isLogin);
+        
         
         console.log('성공', response.data);
       }

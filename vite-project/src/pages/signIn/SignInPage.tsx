@@ -7,6 +7,14 @@ import axios from 'axios';
 import { SignInInfo } from '../../components/dto/Dto';
 import { createSignInConfig } from '../../components/state/AxiosModule';
 
+const test=
+  {
+    "name": "김구",
+    "pwd": "1234"
+    ,"email":"2dd2dd@naver.c1om"
+    ,"checkPwd":"1234"
+}
+
 
 function SignIn (){
 
@@ -26,7 +34,7 @@ function SignIn (){
 
 
   const submitInfo = async () => {
-    const config = createSignInConfig(signInInfo); 
+    const config = createSignInConfig(test); 
     try {
       const response = await axios(config);
 
@@ -35,16 +43,9 @@ function SignIn (){
         console.log('성공', response.data);
       }
     } catch (error: any) {
-      const { status, data } = error.response;
-
-      if (status === 404) {
-       
-        if (data.message === '사용자를 찾지 못했습니다.') {
-          console.error('사용자를 찾지 못했습니다.');
-        } else {
-          console.error(data.message);
-        }
-      }
+      const { data } = error.response;
+      console.log(data.message);
+     
     }
   };
   return (
