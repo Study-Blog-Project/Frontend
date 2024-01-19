@@ -9,6 +9,8 @@ function TestPage() {
     email: "2dd2dd@naver.c1om",
     checkPwd: "23",
   };
+  
+
 
   axios
     .post("52.79.162.144:8080/sign", postData)

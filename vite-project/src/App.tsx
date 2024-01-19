@@ -7,20 +7,24 @@ import TestPage from "./pages/TestPage";
 import ReadPage from "./pages/post/ReadPage";
 import MyPost from "./pages/myPage/MyPost";
 import MyInfo from "./pages/myPage/MyInfo";
+import { CookiesProvider } from "react-cookie";
+
 function App() {
 
 
   return (
-    <Routes>
-      <Route path="/" element={<TestPage />}></Route>
-      <Route path="/login" element={<LoginPage />}></Route>
-      <Route path="/signIn" element={<SignInPage />}></Route>
-      <Route path="/main" element={<MainPage />}></Route>
-      <Route path="/write" element={<WritePage />}></Route>
-      <Route path="/read" element={<ReadPage />}></Route>
-      <Route path="/myPost" element={<MyPost />}></Route>
-      <Route path="/myInfo" element={<MyInfo />}></Route>
-    </Routes>
+    <CookiesProvider>
+      <Routes>
+        <Route path="/" element={<TestPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/signIn" element={<SignInPage />}></Route>
+        <Route path="/main" element={<MainPage />}></Route>
+        <Route path="/write" element={<WritePage />}></Route>
+        <Route path="/read" element={<ReadPage />}></Route>
+        <Route path="/myPost" element={<MyPost />}></Route>
+        <Route path="/myInfo" element={<MyInfo />}></Route>
+      </Routes>
+    </CookiesProvider>
   );
 }
 

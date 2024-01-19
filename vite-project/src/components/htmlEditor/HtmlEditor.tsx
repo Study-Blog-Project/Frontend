@@ -2,7 +2,11 @@ import  { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the styles
 
-function HtmlEditor() {
+interface HtmlEditorProps{
+  onChange?: (value: string) => void;  
+}
+
+function HtmlEditor({onChange}:HtmlEditorProps) {
   const [content, setContent] = useState('');
 
   const modules = {
@@ -17,13 +21,14 @@ function HtmlEditor() {
 
 
   const handleChange = (value:string) => {
-    console.log(content)
+
     setContent(value);
+    onChange?.(value);
   };
 
   return (
     <div>
-      <ReactQuill
+      <ReactQuill 
       style={{ width: '100%', height: '100%' }}
         theme="snow"
       
