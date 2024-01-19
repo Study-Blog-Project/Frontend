@@ -11,7 +11,7 @@ const test=
   {
     "name": "김구",
     "pwd": "1234"
-    ,"email":"2dd2dd@naver.c1om"
+    ,"email":"2dd2dd4@naver.c1om"
     ,"checkPwd":"1234"
 }
 
