@@ -1,16 +1,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.input {
-    @apply font-bold rounded-md;
+.input-wrap {
+    @apply font-bold rounded-md flex;
 }
 
-.input.input-size-full {
-    @apply text-xl px-4 py-1;
+.input-wrap .size-full {
+    @apply flex-1;
 }
 
-
-.input.input-size-default {
-    @apply flex-1 px-2 py-2;
-}
 

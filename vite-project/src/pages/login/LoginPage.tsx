@@ -74,10 +74,10 @@ function Login() {
         <div className="flex mb-3 flex-col ml-10 w-full">
           <Input  value={loginInfo.email}
           onChange={(value) => handleInputChange("email", value)} 
-          size='full' className='mb-2' place={"이메일"}></Input>
+          size='full' className='mb-2' placeHolder={"이메일"}></Input>
           <Input value={loginInfo.pwd}
           onChange={(value) => handleInputChange("pwd", value)} 
-          size='full' place={"비밀번호"}></Input>
+          size='full' placeHolder={"비밀번호"}></Input>
         </div>
         <div className='w-full mb-2 pl-10 mr-10'>
           <Btn  handleBtn={submitInfo} className='w-full'  txt='로그인' size="big" ></Btn>

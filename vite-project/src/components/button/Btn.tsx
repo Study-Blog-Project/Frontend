@@ -11,6 +11,7 @@ interface ButtonProps {
   txt?: string;
   txtColor?: string;
   className?: string;
+  [key: string]: any; // eslint-disable-line
 }
 
 interface Divstyle {
@@ -41,6 +42,7 @@ function Btn({
   txt = undefined,
   txtColor = "white",
   className = "",
+  ...props
 }: ButtonProps) {
   const [txtStyle, setTxtStyle] = useState<textStyle>({});
   const [style, setStyle] = useState<Divstyle>({});
@@ -125,7 +127,7 @@ function Btn({
   const sizeClass = `btn-size-${size}`;
 
   return (
-    <span onClick={handleBtn} style={style} className={`btn inline-flex items-center justify-center ${className} ${sizeClass}`}>
+    <span onClick={handleBtn} style={style} className={`btn inline-flex items-center justify-center ${className} ${sizeClass}`} {...props}>
       <span style={txtStyle}>{txt}</span>
     </span>
   );

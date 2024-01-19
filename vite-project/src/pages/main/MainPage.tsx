@@ -17,7 +17,7 @@ function MainPage() {
         <Tab content={["전체","코테","프로젝트","cs","etc"]}></Tab>
       </div>
       <div className='flex justify-between mb-2'>
-        <Input className="flex-grow ml-12" size="full" place='팀프로젝트,코테,스터디를 검색해보세요!' ></Input>
+        <Input className="flex-grow ml-12" size="full" placeHolder='팀프로젝트,코테,스터디를 검색해보세요!' ></Input>
         <Btn className='mr-3' size="default" txt='검색'></Btn>
       </div>
       <div>

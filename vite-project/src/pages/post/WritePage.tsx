@@ -69,7 +69,7 @@ function WritePage() {
       <Banner className="text-3xl font-black" size="full" txt="프로젝트 모집 예시를 참고해 주세요."></Banner>
     </div>
     <div className="ml-14 pb-4 text-2xl font-bold">
-      <Input  onChange={(value) => handleInputChange("title", value)} size="full" place="제목에 핵심 내용을 요약해보세요." >
+      <Input  onChange={(value) => handleInputChange("title", value)} size="full" placeHolder="제목에 핵심 내용을 요약해보세요." >
       </Input>
     </div>
     <div className="flex ml-14 pb-4">

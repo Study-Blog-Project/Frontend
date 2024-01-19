@@ -1,12 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import './style.css';
 interface InputProps {
-  size?:"full"|"default"
-  place?:string;
-  className?:string
+  size?: "full" | "default"
+  placeHolder?: string;
+  className?: string
   value?: string; 
   onChange?: (value: string) => void;  
-  type?:"password"|"default"
+  type?: "password" | "default"
 }
 
 interface InputStyle{
@@ -14,10 +14,10 @@ interface InputStyle{
   height?: string | undefined,
 }
 
-function Input({ place = "입력하세요" ,type="default" ,className="",   onChange, value = "",  size="default",}:InputProps
+function Input({ placeHolder = "입력하세요", type="default", className="", onChange, value = "",  size="default",}:InputProps
 ) {
   const [style, setStyle] = useState<InputStyle>({});
-  const [inputValue, setInputValue] = useState<string>(value);
+  const [inputValue, setInputValue] = useState<string>(value ?? "");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -27,27 +27,36 @@ function Input({ place = "입력하세요" ,type="default" ,className="",   onCh
 
   
   useEffect(()=>{
-    let width="";
-    let height="";
-    switch(size){
-      case "full":
-        width="80%";
-        height="100%";
-        break;
-      case "default":
-        width="60%";
-        height="100%";
-        break;
-    }
-    setStyle({
-      width,
-      height,
-    });
-  },[place,className,size])
+    // let width="";
+    // let height="";
+    // switch(size){
+    //   case "full":
+    //     width="80%";
+    //     height="100%";
+    //     break;
+    //   case "default":
+    //     width="60%";
+    //     height="100%";
+    //     break;
+    // }
+    // setStyle({
+    //   width,
+    //   height,
+    // });
+  },[placeHolder,className,size])
   return (
     <>
       
-      {<input type={type === "password" ? "password" : "text"} style={style} onChange={handleInputChange} value={inputValue} placeholder={place} className={`rounded border border-solid border-black pl-2 mr-6 py-4 my-1 ${className}`}></input>}
+      {
+        <div className="input-wrap">
+          <input type={type === "password" ? "password" : "text"}
+                 style={style}
+                 onChange={handleInputChange}
+                 value={inputValue}
+                 placeholder={placeHolder}
+                 className={`rounded border border-solid border-black pl-2 mr-6 py-4 my-1 size-${size} ${className}`} />
+        </div>
+      }
     </>
   )
 }
