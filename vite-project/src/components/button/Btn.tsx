@@ -49,8 +49,7 @@ function Btn({
 
   useEffect(() => {
     let backgroundColor = "";
-    let width = "";
-    let height = "";
+
     let border = "";
     let backgroundImage = "";
     let backgroundSize = "auto";
@@ -109,8 +108,6 @@ function Btn({
 
     setStyle({
       backgroundColor,
-      width,
-      height,
       border,
       backgroundImage,
       backgroundSize,

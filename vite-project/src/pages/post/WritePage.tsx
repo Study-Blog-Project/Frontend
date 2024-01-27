@@ -1,6 +1,6 @@
 import HtmlEditor from "../../components/htmlEditor/HtmlEditor";
 import Banner from "../../components/banner/Banner";
-import { WriteInfo } from "../../components/dto/Dto";
+import { WritePostInfo } from "../../components/dto/Dto";
 import Btn from "../../components/button/Btn";
 import { useState } from "react";
 import Input from "../../components/input/Input";
@@ -19,15 +19,14 @@ function WritePage() {
   ]
   
   let userId =3;
-  const [WriteInfo, setWriteInfo] = useState<WriteInfo>({
-    recruit: "",
+  const [WriteInfo, setWriteInfo] = useState<WritePostInfo>({
     content: "",
     category: "",
     title: "",
     id:userId,
   });
 
-  const handleInputChange = (key: keyof WriteInfo, value: string) => {
+  const handleInputChange = (key: keyof WritePostInfo, value: string) => {
     const sanitizedValue = value.replace(/<\/?p>/g, '');
     setWriteInfo({
       ...WriteInfo,

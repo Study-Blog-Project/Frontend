@@ -2,10 +2,48 @@
 import Header from '../../components/header/Header'
 import Btn from '../../components/button/Btn'
 //import search from '../../assets/search.png'
-
+import { useParams } from 'react-router-dom';
+import { useAuthStore } from '../../components/state/Login';
+import { useEffect, useState } from 'react';
+import { createReadPostConfig } from '../../components/state/AxiosModule';
+import { PostDto, ReadPostInfo } from '../../components/dto/Dto';
+import axios from 'axios';
 function ReadPage() {
-  const isLogin = true;
-  //const [isLogin, setIsLogin] = useState<boolean>(true);
+  const {isLogin} = useAuthStore();
+  const { boardId } = useParams();
+  
+  const [readPageInfo, setReadPageInfo] = useState<ReadPostInfo>({
+    boardId:0
+  });
+  const [postResponse, setPostResponse] = useState<PostDto | null>(null);
+  useEffect(()=>{
+    const boardIdAsNumber = Number(boardId);
+    setReadPageInfo({ boardId: boardIdAsNumber });
+
+    const fetchData = async () =>{
+      const config = createReadPostConfig(readPageInfo); 
+      try {
+        const response = await axios(config);
+        if (response.data.statusCode === 200) {
+          console.log('성공', response.data);
+          setPostResponse(response.data); 
+        }
+      } catch (error: any) {
+        console.log(error)
+        const { status, data } = error.response;
+        console.log(data.message)
+        if (status === 404) {
+         
+          if (data.message === '사용자를 찾지 못했습니다.') {
+            console.error('사용자를 찾지 못했습니다.');
+          } else {
+            console.error(data.message);
+          }
+        }
+      }
+    }
+    fetchData();
+  },[])
   console.log(isLogin)
   return (
     <div className='h-full w-full'>

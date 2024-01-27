@@ -2,7 +2,7 @@ import Modal from '../../components/modal/Modal'
 import Input from '../../components/input/Input'
 import Btn from '../../components/button/Btn'
 import {useState} from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {SignInInfo} from '../../components/dto/Dto';
 import {createSignInConfig} from '../../components/state/AxiosModule';
 
@@ -34,7 +34,7 @@ function SignIn() {
 
 
   const submitInfo = async () => {
-    const config = createSignInConfig(test);
+    const config = createSignInConfig(signInInfo);
     try {
       const response = await axios(config);
 
@@ -42,11 +42,26 @@ function SignIn() {
 
         console.log('성공', response.data);
       }
-    } catch (error: any) {
-      const {data} = error.response;
-      console.log(data.message);
+    } catch (err: any) {
+      console.log(err)
+      if (err.response) {
+        console.error(err.response.data.message);
+      } else if (err.request) {
+        console.error(err.request);
+      } else {
+        console.error(err.message);
+      }
 
     }
+    // axios.post('http://54.180.21.153:8080/sign', {
+    //   test
+    // })
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   };
   return (
     <>

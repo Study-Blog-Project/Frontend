@@ -1,22 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface TabProps {
   content?: string[];
   className?: string;
+  onTabSelect: (selectedContent: string) => void;
 }
 
-function Tab({ content = [], className = '' }: TabProps) {
+function Tab({ content = [], className = '',onTabSelect }: TabProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (content && content.length > 0) {
-      const joinedContent = content.join(', ');
-      console.log(joinedContent);
-    }
-  }, [content]);
+  
 
   const handleDivClick = (index: number) => {
     setSelectedIdx(index);
+    onTabSelect(content[index])
   };
 
   return (

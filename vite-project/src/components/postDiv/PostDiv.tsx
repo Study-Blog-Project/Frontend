@@ -7,16 +7,24 @@ interface PostDivProps{
   title?:string
   content?:string
   id?:string
+  boardId?: number;
   time?:string
-  view?:string
-  comment?:string
+  view?:number
+  comment?:number
+  handlePost?: (boardId: number) => void;
 }
 function PostDiv(props: PostDivProps) {
-  const {firstPin, secondPin,title,content,id,time,view,comment } = props;
-  
+  const {firstPin, secondPin,title,content,id,boardId,time,view,comment,handlePost } = props;
+
+  const handleClick = () => {
+    if (handlePost && boardId) {
+      handlePost(boardId);
+    }
+  };
+
   return (
     //배경색 빨강은 제거예정
-    <div className="w-full h-full bg-red-100 px-2 py-2 border-b border-solid border-black sm:w-full md:w-full lg:w-full xl:w-full flex flex-col">
+    <div onClick={handleClick}className="w-full h-full bg-red-100 px-2 py-2 border-b border-solid border-black sm:w-full md:w-full lg:w-full xl:w-full flex flex-col">
       <div className='flex '>
         <div className='ml-2  flex justify-between'>
           {firstPin && <Pin className="mr-2"pinColor={firstPin.pinColor} txt={firstPin.txt}/>}

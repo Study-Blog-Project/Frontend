@@ -12,7 +12,7 @@ interface containerRefStyle {
   height?: string | undefined;
 }
 
-function Modal({ size = "medium", children, open, onClose }: ModalProps) {
+function Modal({ size = "medium", children, open=true, onClose }: ModalProps) {
   const [style, setStyle] = useState<containerRefStyle>({});
 
   // useEffect(() => {

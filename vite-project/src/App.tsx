@@ -20,7 +20,7 @@ function App() {
         <Route path="/signIn" element={<SignInPage />}></Route>
         <Route path="/main" element={<MainPage />}></Route>
         <Route path="/write" element={<WritePage />}></Route>
-        <Route path="/read" element={<ReadPage />}></Route>
+        <Route path="/read/:boardId" element={<ReadPage />} />
         <Route path="/myPost" element={<MyPost />}></Route>
         <Route path="/myInfo" element={<MyInfo />}></Route>
       </Routes>

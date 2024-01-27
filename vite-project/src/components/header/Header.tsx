@@ -1,9 +1,11 @@
 import  { useEffect } from 'react'
 import Btn from '../button/Btn';
+interface headerProps{
+  isLogin?:boolean
+}
+function Header({isLogin}:headerProps) {
+  
 
-function Header() {
-  //토큰받으면 useeffect로 회원인지 검사하는 로직추가
-  const isLogin = true;
   //const [isLogin, setIsLogin] = useState<boolean>(true);
   
   useEffect(()=>{

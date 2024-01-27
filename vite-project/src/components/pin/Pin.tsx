@@ -51,6 +51,27 @@ function Pin({ pinColor = "red", txt = "default", className = "" }: PinProps) {
         backgroundColor = "#D400F6";
         break;
     }
+    switch (txt) {
+      case "모집완료":
+        backgroundColor = "#F13015";
+        break;
+      case "모집중":
+        backgroundColor = "#00964E";
+        break;
+      case "CS":
+        backgroundColor = "#F1DE08";
+        txtColor="black";
+        break;
+      case "etc":
+        backgroundColor = "#30A9DE";
+        break;
+      case "코테":
+        backgroundColor = "#2B0EDF";
+        break;
+      case "프로젝트":
+        backgroundColor = "#D400F6";
+        break;
+    }
     setStyle({
       backgroundColor,
       width,

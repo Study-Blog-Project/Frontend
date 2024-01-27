@@ -3,17 +3,14 @@ import Modal from '../../components/modal/Modal'
 import Input from '../../components/input/Input'
 import Btn from '../../components/button/Btn'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { setAccessToken } from '../../components/state/TokenAction';
-import { setRefreshToken } from '../../components/state/TokenAction';
-import { createLoginConfig } from '../../components/state/AxiosModule';
+
 import {useAuthStore} from '../../components/state/Login';
 import { LoginInfo } from '../../components/dto/Dto';
 
 const test=
-  {
-    "pwd": "1234"
-    ,"email":"2dd2dd@naver.c1om"
+{
+  "email": "admin@naver.com",
+  "pwd": "1234"
 }
 
 function Login() {
@@ -29,57 +26,31 @@ function Login() {
       [key]: value,
     });
   };
+  
   useEffect(()=>{
     console.log(isLogin)
   },[isLogin])
   
   const submitInfo = async () => {
-    const config = createLoginConfig(test); 
-    try {
-      const response = await axios(config);
-
-      if (response.data.statusCode === 200) {
-       
-        const accessToken = response.headers['Access_Token'];
-        const refreshToken =response.headers['Refresh_Token'];
-
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken)
-        console.log(isLogin);
-        login();
-        
-        
-        console.log('성공', response.data);
-      }
-    } catch (error: any) {
-      const { status, data } = error.response;
-
-      if (status === 404) {
-       
-        if (data.message === '사용자를 찾지 못했습니다.') {
-          console.error('사용자를 찾지 못했습니다.');
-        } else {
-          console.error(data.message);
-        }
-      }
-    }
+    console.log(test)
+    login(test);
   };
 
   return (
-    <Modal size={"narrow"}>
-      <div className="relative flex flex-col border  items-center border-solid border-black z-10 bg-white rounded-3xl">
-        <div>
+    <Modal size={"narrow"} open={true}>
+      <div className="relative flex flex-col w-full h-full items-center b z-10 bg-white rounded-3xl">
+        <div className='mt-5'>
           <Btn className="mt-3 mb-3" size='small' txt='이미지'></Btn>
         </div>
-        <div className="flex mb-3 flex-col ml-10 w-full">
-          <Input  value={loginInfo.email}
+        <div className="flex mb-3 mt-8 flex-col justify-center ml-5 w-full">
+          <Input value={loginInfo.email}
           onChange={(value) => handleInputChange("email", value)} 
-          size='full' className='mb-2' placeHolder={"이메일"}></Input>
+          size='full' className='mb-4' placeHolder={"이메일"}></Input>
           <Input value={loginInfo.pwd}
           onChange={(value) => handleInputChange("pwd", value)} 
           size='full' placeHolder={"비밀번호"}></Input>
         </div>
-        <div className='w-full mb-2 pl-10 mr-10'>
+        <div className='w-full mb-2 mt-10 pl-10 mr-10'>
           <Btn  handleBtn={submitInfo} className='w-full'  txt='로그인' size="big" ></Btn>
         </div>
         <div className='flex'>
