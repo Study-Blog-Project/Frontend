@@ -20,7 +20,7 @@ function MainPage() {
   const [page,setPage] = useState<number>(0);
   const [mainListInfo, setMainListInfo] = useState<MainListInfo>({
     order: page-1,
-    category: 'CS',
+    category: '전체',
   });
   const {isLogin} = useAuthStore();
   const [boardResponse, setBoardResponse] = useState<BoardResponseDto | null>(null);
@@ -53,6 +53,7 @@ function MainPage() {
   useEffect(()=>{
     const fetchData= async () =>{
       const config = createMainlistConfig(mainListInfo); 
+      console.log(mainListInfo)
       try {
         const response = await axios(config);
   

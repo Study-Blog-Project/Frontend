@@ -72,15 +72,16 @@ export const createWriteConfig = (requestBody: WritePostInfo): AxiosRequestConfi
 };
 
 export const createMainlistConfig = (requestBody:MainListInfo ): AxiosRequestConfig => {
-
   const config: AxiosRequestConfig = {
     baseURL: 'http://54.180.21.153:8080',
     url: '/',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+
     },
     data: requestBody,
+    withCredentials: true,
   };
 
   return config;
