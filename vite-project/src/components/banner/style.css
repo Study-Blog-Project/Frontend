@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.banner-wrap {
+    @apply flex w-full py-6;
+}
+
+.banner-wrap.bg-primary {
+    @apply bg-gray-900;
+}
+
+.banner-wrap.bg-secondary {
+    @apply bg-blue-900;
+}
+
+.banner-wrap .banner {
+    @apply max-w-[1136px] mx-auto w-full;
+}
+
+.banner-wrap .banner-title {
+    @apply text-2xl font-bold text-white;
+}
+
+.banner-wrap .banner-description {
+    @apply text-base text-white font-normal;
+}
