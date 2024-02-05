@@ -13,7 +13,7 @@ function Header({isLogin}:headerProps) {
 
   },[isLogin])
   return (
-    <div className='flex justify-between items-center px-2 py-2 mb-2'  style={{ borderBottom: '2px solid #B3B3B3' }}>
+    <div className='flex justify-between items-center px-2 py-2 mb-2'>
       {!isLogin && <div>
         이미지
       </div>}

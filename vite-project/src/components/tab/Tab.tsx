@@ -1,20 +1,26 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 
 interface TabProps {
-  content?: string[];
+  content: string[];
   className?: string;
+  defaultSelected?: string;
   onTabSelect: (selectedContent: string) => void;
 }
 
-function Tab({ content = [], className = '',onTabSelect }: TabProps) {
+function Tab({ content = [], className = '', onTabSelect, defaultSelected }: TabProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-
-  
 
   const handleDivClick = (index: number) => {
     setSelectedIdx(index);
     onTabSelect(content[index])
   };
+
+  useEffect(() => {
+    console.log(defaultSelected, 'defaultSelected');
+    if(!defaultSelected) return;
+    if(!content.includes(defaultSelected)) return;
+    setSelectedIdx(content.indexOf(defaultSelected));
+  }, [defaultSelected]);
 
   return (
     <div className={`flex ${className}`}>
