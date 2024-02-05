@@ -3,9 +3,10 @@ import Modal from '../../components/modal/Modal'
 import Input from '../../components/input/Input'
 import Btn from '../../components/button/Btn'
 import { useEffect, useState } from 'react';
-
-import {useAuthStore} from '../../components/state/Login';
+import { useAuthStore } from '../../components/state/Login';
+//import useAuthStore from '../../components/state/Login';
 import { LoginInfo } from '../../components/dto/Dto';
+import { useNavigate } from 'react-router-dom';
 
 const test=
 {
@@ -26,9 +27,12 @@ function Login() {
       [key]: value,
     });
   };
-  
+  const navigate = useNavigate();
   useEffect(()=>{
-    console.log(isLogin)
+    if(isLogin === true )
+    {
+      navigate("/main")
+    }
   },[isLogin])
   
   const submitInfo = async () => {

@@ -1,14 +1,21 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the styles
 
 interface HtmlEditorProps{
+  initialValue?: string;
   onChange?: (value: string) => void;  
 }
 
-function HtmlEditor({onChange}:HtmlEditorProps) {
+function HtmlEditor({initialValue,onChange}:HtmlEditorProps) {
   const [content, setContent] = useState('');
-
+  useEffect(()=>
+  {
+    if(initialValue){
+      setContent(initialValue);
+      console.log(content)
+    }
+  },[initialValue])
   const modules = {
     toolbar: {
       container: [
@@ -31,7 +38,6 @@ function HtmlEditor({onChange}:HtmlEditorProps) {
       <ReactQuill 
       style={{ width: '100%', height: '100%' }}
         theme="snow"
-      
         modules={modules}
         value={content}
         onChange={handleChange}

@@ -39,12 +39,12 @@ function PostDiv(props: PostDivProps) {
       </div>
       <div className='flex justify-between'>
         <div className='ml-2 mt-2'>
-          <span className='mr-4'>{id}</span>
-          <span>{time}</span>
+          <span className='mr-4'>아이디 {id}</span>
+          <span>시간 {time}</span>
         </div>
         <div className='mr-2'>
-          <span className='mr-4'>{view}</span>
-          <span>{comment}</span>
+          <span className='mr-4'>조회수 {view}</span>
+          <span>댓글수 {comment}</span>
         </div>
       </div>
     </div>

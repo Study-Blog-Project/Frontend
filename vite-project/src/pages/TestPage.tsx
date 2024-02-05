@@ -12,7 +12,7 @@ function TestPage() {
 
 
   return <div className="w-screen">
-    <Pagination totalPages={11} currentPage={11} onPageChange={handlePageChange} ></Pagination>
+    <Pagination totalPages={50} currentPage={11} onPageChange={handlePageChange} ></Pagination>
   </div>;
 }
 

@@ -9,7 +9,7 @@ interface PaginationProps {
 
 function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
   const [visiblePages, setVisiblePages] = useState<number[]>([]);
-
+  const [selectedPage, setSelectedPage]= useState<number>(currentPage);
   useEffect(() => {
     // 현재 페이지 주변에 보여질 페이지 개수
     const visiblePagesCount = 10;
@@ -26,7 +26,7 @@ function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) 
       let end = currentPage + halfVisible;
 
       if (start < 1) {
-        // 현재 페이지 주변에 남은 공간이 없을 때
+        
         start = 1;
         end = visiblePagesCount;
       } else if (end > totalPages) {
@@ -43,16 +43,23 @@ function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) 
   }, [totalPages, currentPage]);
 
   const handlePageChange = (page: number) => {
+    console.log("selectedPage"+selectedPage)
+    console.log("currentPage"+currentPage)
+    setSelectedPage(page);
     onPageChange(page);
   };
 
   return (
     <div >
+      {currentPage > 10 && <Btn size="small" txt="..."
+      className='mr-2'
+      handleBtn={() => handlePageChange(1)}
+      /> }
       {currentPage > 1 && (
         <Btn
           size="small"
           txt="이전"
-          handleBtn={() => handlePageChange(currentPage - 1)}
+          handleBtn={() => handlePageChange(selectedPage - 1)}
           className='mr-1'
         />
       )}
@@ -61,19 +68,22 @@ function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) 
           key={page}
           size="small"
           txt={`${page}`}
-          buttonColor={currentPage === page ? 'primary' : 'secondary'}
+          buttonColor={selectedPage === page ? 'primary' : 'secondary'}
           handleBtn={() => handlePageChange(page)}
           className='mr-1'
         />
       ))}
-      {totalPages > 10 && currentPage < totalPages - 4 && <Btn size="small" txt="..." /> }
-      {currentPage < totalPages && (
+      {totalPages > 1 && currentPage < totalPages && (
         <Btn
           size="small"
           txt="다음"
-          handleBtn={() => handlePageChange(currentPage + 1)}
+          handleBtn={() => handlePageChange(selectedPage + 1)}
         />
       )}
+      {totalPages > 10 && <Btn size="small" txt="..."
+      className='ml-2'
+      handleBtn={() => handlePageChange(totalPages)}
+      /> }
     </div>
   );
 }

@@ -7,24 +7,26 @@ import Input from "../../components/input/Input";
 import axios from "axios";
 import { createWriteConfig } from "../../components/state/AxiosModule";
 import SelectComponent from "../../components/select/Select";
-
+import { getNickName } from "../../components/state/TokenAction";
 
 
 function WritePage() {
-
+  const nick= getNickName();
+  console.log(nick)
   const data = [
-    {"value": "cs", "label": "cs"},
+    {"value": "CS", "label": "CS"},
     {"value": "코테", "label": "코테"},
     {"value": "프로젝트", "label": "프로젝트"},
   ]
   
-  let userId =3;
+
   const [WriteInfo, setWriteInfo] = useState<WritePostInfo>({
     content: "",
     category: "",
     title: "",
-    id:userId,
+    nickname:nick,
   });
+
 
   const handleInputChange = (key: keyof WritePostInfo, value: string) => {
     const sanitizedValue = value.replace(/<\/?p>/g, '');
@@ -42,16 +44,21 @@ function WritePage() {
     const config = createWriteConfig(WriteInfo); 
     try {
       const response = await axios(config);
-
+  
       if (response.data.statusCode === 200) {
-
         console.log('성공', response.data);
       }
     } catch (error: any) {
+      console.error(error.message);
+  
+      // error.response가 undefined인 경우 처리
+      if (!error.response) {
+        console.error(error);
+        return;
+      }
+  
       const { status, data } = error.response;
-      console.log(data.message)
       if (status === 404) {
-       
         if (data.message === '사용자를 찾지 못했습니다.') {
           console.error('사용자를 찾지 못했습니다.');
         } else {
@@ -60,12 +67,13 @@ function WritePage() {
       }
     }
   };
+  
 
 
  return (
    <div className="w-full h-full">
     <div className="w-full flex justify-center py-4" >
-      <Banner className="text-3xl font-black" size="full" title="프로젝트 모집 예시를 참고해 주세요."></Banner>
+      <Banner className="text-3xl font-black"  title="프로젝트 모집 예시를 참고해 주세요."></Banner>
     </div>
     <div className="ml-14 pb-4 text-2xl font-bold">
       <Input  onChange={(value) => handleInputChange("title", value)} size="full" placeHolder="제목에 핵심 내용을 요약해보세요." >
@@ -76,7 +84,7 @@ function WritePage() {
         모집 구분
       </span>
       <div className="ml-8">
-        <SelectComponent defaultValue="cs" onSelect={(value) => handleInputChange("category", value)} data={data}></SelectComponent>
+        <SelectComponent defaultValue="CS" onSelect={(value) => handleInputChange("category", value)} data={data}></SelectComponent>
       </div>
     </div>
     <div className="w-full" >

@@ -17,8 +17,14 @@ function Tab({ content = [], className = '', onTabSelect, defaultSelected }: Tab
 
   useEffect(() => {
     console.log(defaultSelected, 'defaultSelected');
-    if(!defaultSelected) return;
-    if(!content.includes(defaultSelected)) return;
+    if(!defaultSelected){
+      setSelectedIdx(0);
+      return;
+    } 
+    if(!content.includes(defaultSelected)) {
+      setSelectedIdx(0);
+      return;
+    }
     setSelectedIdx(content.indexOf(defaultSelected));
   }, [defaultSelected]);
 

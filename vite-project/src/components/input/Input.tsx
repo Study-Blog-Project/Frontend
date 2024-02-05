@@ -5,6 +5,7 @@ interface InputProps {
   placeHolder?: string;
   className?: string
   value?: string; 
+  initialValue?: string;
   onChange?: (value: string) => void;  
   type?: "password" | "default"
 }
@@ -14,11 +15,19 @@ interface InputStyle{
   height?: string | undefined,
 }
 
-function Input({ placeHolder = "입력하세요", type="default", className="", onChange, value = "",  size="default",}:InputProps
+function Input({initialValue, placeHolder = "입력하세요", type="default", className="", onChange, value = "",  size="default",}:InputProps
 ) {
   const [style, setStyle] = useState<InputStyle>({});
   const [inputValue, setInputValue] = useState<string>(value ?? "");
-
+  
+  useEffect(()=>
+  {
+    if(initialValue){
+      setInputValue(initialValue);
+      console.log(inputValue)
+    }
+  },[initialValue])
+  
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     onChange?.(e.target.value);

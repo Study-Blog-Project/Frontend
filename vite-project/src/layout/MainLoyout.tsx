@@ -1,7 +1,8 @@
 import React from "react";
 import Banner from "../components/banner/Banner";
 import Header from "../components/header/Header";
-import {useAuthStore} from "../components/state/Login";
+import { useAuthStore } from "../components/state/Login";
+//import useAuthStore from "../components/state/Login";
 import {useLocation} from "react-router-dom";
 
 const banner = {
