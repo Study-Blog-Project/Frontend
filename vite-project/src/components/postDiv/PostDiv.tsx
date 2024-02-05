@@ -1,6 +1,6 @@
 
-import Pin from '../pin/Pin'
-import { PinProps } from '../pin/Pin'
+import Chip from '../chip/Chip'
+import { PinProps } from '../chip/Chip'
 interface PostDivProps{
   firstPin?:PinProps
   secondPin?:PinProps
@@ -24,25 +24,25 @@ function PostDiv(props: PostDivProps) {
 
   return (
     //배경색 빨강은 제거예정
-    <div onClick={handleClick}className="w-full h-full bg-red-100 px-2 py-2 border-b border-solid border-black sm:w-full md:w-full lg:w-full xl:w-full flex flex-col">
-      <div className='flex '>
-        <div className='ml-2  flex justify-between'>
-          {firstPin && <Pin className="mr-2"pinColor={firstPin.pinColor} txt={firstPin.txt}/>}
-          {secondPin && <Pin pinColor={secondPin.pinColor} txt={secondPin.txt}/>}
+    <div onClick={handleClick}className="w-full h-full px-2 py-4 border-b border-solid border-gray-100 sm:w-full md:w-full lg:w-full xl:w-full flex flex-col">
+      <div className='flex mb-1'>
+        <div className='ml-2 flex items-center'>
+          {firstPin && <Chip className="mr-1" chipColor={firstPin.chipColor} txt={firstPin.txt}/>}
+          {secondPin && <Chip chipColor={secondPin.chipColor} txt={secondPin.txt}/>}
         </div>
-        <div className='ml-10'>
-          <span>{title}</span>
+        <div className='ml-4 flex-1'>
+          <span className="text-lg font-bold text-gray-800">{title}</span>
         </div>
       </div>
-      <div className='ml-2 mt-2'>
-        <span>{content}</span>
+      <div className='px-3 line-clamp-1 overflow-hidden text-sm text-gray-600 h-5'>
+        {content}
       </div>
-      <div className='flex justify-between'>
-        <div className='ml-2 mt-2'>
+      <div className='flex justify-between mt-3 px-2 text-xs text-gray-400'>
+        <div className=''>
           <span className='mr-4'>아이디 {id}</span>
           <span>시간 {time}</span>
         </div>
-        <div className='mr-2'>
+        <div className=''>
           <span className='mr-4'>조회수 {view}</span>
           <span>댓글수 {comment}</span>
         </div>

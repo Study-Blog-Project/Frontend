@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export interface PinProps {
-  pinColor?: "red" | "green" | "yellow" | "blue" | "purple" | "pink";
+  chipColor?: "red" | "green" | "yellow" | "blue" | "purple" | "pink";
   txt?: string;
   className?: string;
 }
@@ -19,18 +19,13 @@ interface Divstyle {
   borderRadius?: string | undefined;
 }
 
-function Pin({ pinColor = "red", txt = "default", className = "" }: PinProps) {
+function Chip({ chipColor = "red", txt = "default", className = "" }: PinProps) {
   const [style, setStyle] = useState<Divstyle>({});
   const [txtStyle, setTxtStyle] = useState<textStyle>({});
   useEffect(() => {
     let backgroundColor = "";
-    const width = "70px";
-    const height = "30px";
-    const textSize = "0.9rem";
-    const fontWeight = "1000";
     let txtColor = "white";
-    const borderRadius = "30px";
-    switch (pinColor) {
+    switch (chipColor) {
       case "red":
         backgroundColor = "#F13015";
         break;
@@ -74,21 +69,16 @@ function Pin({ pinColor = "red", txt = "default", className = "" }: PinProps) {
     }
     setStyle({
       backgroundColor,
-      width,
-      height,
-      borderRadius,
     });
     setTxtStyle({
-      fontSize: textSize,
-      fontWeight,
       color: txtColor,
     });
-  }, [pinColor, txt]);
+  }, [chipColor, txt]);
   return (
-    <span style={style} className={`flex justify-center items-center ${className}`}>
-      <span style={txtStyle}>{txt}</span>
+    <span style={{...style, ...txtStyle}} className={`flex text-xs font-bold px-1.5 py-1 rounded-xl justify-center items-center ${className}`}>
+      {txt}
     </span>
   );
 }
 
-export default Pin;
+export default Chip;

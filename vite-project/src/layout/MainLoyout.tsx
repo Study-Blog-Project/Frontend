@@ -35,9 +35,11 @@ const MainLoyout = ({children}: MainLoyoutProps) => {
       <div className="max-w-[1136px] mx-[auto]">
         <Header isLogin={isLogin}></Header>
       </div>
-      <div className='flex justify-center'>
-        <Banner bannerColor={bannerColor} title={title}>{description}</Banner>
-      </div>
+      {banner[pathname] &&
+        <div className='flex justify-center'>
+          <Banner bannerColor={bannerColor} title={title}>{description}</Banner>
+        </div>
+      }
       <div className="content max-w-[1136px] mx-[auto]">
         {children}
       </div>

@@ -29,19 +29,13 @@ function Tab({ content = [], className = '', onTabSelect, defaultSelected }: Tab
   }, [defaultSelected]);
 
   return (
-    <div className={`flex ${className}`}>
+    <div className={`flex mt-5 mb-3 w-full border-b ${className}`}>
       {content.map((word, index) => (
-        <div className="mr-10 cursor-pointer "
+        <div className={`cursor-pointer pb-2 px-5 ${selectedIdx === index ? 'border-b-[2px] border-black' : ''}`}
           key={index}
           onClick={() => handleDivClick(index)}
-          style={{
-            borderBottom: selectedIdx === index ? '2px solid black' : 'none',
-          }}
         >
-          <span className="text-2xl" style={{
-            fontWeight: selectedIdx === index ? 'bold' : 'normal',
-          }} >{word}</span>
-          
+          <span className={`text-lg ${selectedIdx === index ? 'font-bold' : 'text-gray-400'}`} >{word}</span>
         </div>
       ))}
     </div>

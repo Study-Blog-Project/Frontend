@@ -2,11 +2,18 @@
 @tailwind utilities;
 
 .input-wrap {
-    @apply font-bold rounded-md flex;
+    @apply font-bold flex;
 }
 
-.input-wrap .size-full {
+.input-wrap.size-full {
     @apply flex-1;
 }
 
+.input-wrap.size-default {
+    @apply w-[300px];
+}
+
+.input-wrap input {
+    @apply w-full rounded-2xl border border-[1px] border-solid border-gray-400 px-4 py-2;
+}
 

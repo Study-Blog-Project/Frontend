@@ -157,9 +157,9 @@ function MainPage() {
   return (
     <MainLoyout>
       <Tab onTabSelect={handleTabSelect} content={categoryList.map(x => x.category)} defaultSelected={getCategory()}></Tab>
-      <div className='flex justify-between mb-2'>
-        <Input className="ml-12" size="full" placeHolder='팀프로젝트,코테,스터디를 검색해보세요!' ></Input>
-        <Btn className='mr-3' size="default" txt='검색'></Btn>
+      <div className='flex justify-between space-x-2 mb-2'>
+        <Input size="full" placeHolder='팀프로젝트,코테,스터디를 검색해보세요!' ></Input>
+        <Btn size="default" rounded={true} txt='검색'></Btn>
       </div>
       <div className='cursor-pointer'>
         {boardResponse && PostDivs(boardResponse)}

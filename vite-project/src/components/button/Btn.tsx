@@ -7,6 +7,7 @@ interface ButtonProps {
   backimage?: string | undefined;
   size?: "small" | "default" | "big";
   fullWidth?: boolean;
+  rounded?: boolean;
   handleBtn?: () => void;
   txt?: string;
   txtColor?: string;
@@ -37,7 +38,7 @@ function Btn({
   category = "outlined",
   backimage = undefined,
   size = "default",
-
+  rounded = false,
   handleBtn = undefined,
   txt = undefined,
   txtColor = "white",
@@ -76,7 +77,7 @@ function Btn({
         console.log(backgroundColor);
         break;
       case "outlined":
-        border = "1px solid black";
+        // border = "1px solid black";
         break;
     }
 
@@ -124,7 +125,7 @@ function Btn({
   const sizeClass = `btn-size-${size}`;
 
   return (
-    <span onClick={handleBtn} style={style} className={`btn inline-flex items-center justify-center ${className} ${sizeClass}`} {...props}>
+    <span onClick={handleBtn} style={style} className={`btn inline-flex items-center justify-center ${rounded ? "rounded-2xl" : "rounded-md"} ${className} ${sizeClass}`} {...props}>
       <span style={txtStyle}>{txt}</span>
     </span>
   );

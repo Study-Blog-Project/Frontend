@@ -57,13 +57,13 @@ function Input({initialValue, placeHolder = "입력하세요", type="default", c
     <>
       
       {
-        <div className="input-wrap">
+        <div className={`input-wrap size-${size}`}>
           <input type={type === "password" ? "password" : "text"}
                  style={style}
                  onChange={handleInputChange}
                  value={inputValue}
                  placeholder={placeHolder}
-                 className={`rounded border border-solid border-black pl-2 mr-6 py-4 my-1 size-${size} ${className}`} />
+                 className={`${className}`} />
         </div>
       }
     </>
