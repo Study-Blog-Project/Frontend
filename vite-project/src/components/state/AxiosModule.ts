@@ -1,6 +1,6 @@
 
 import axios, { AxiosRequestConfig } from "axios";
-import { LoginInfo ,SignInInfo , WritePostInfo,MainListInfo,ReadPostInfo,UserPostInfo, UserListRequestInfo, ModifyPostInfo, DeletePostInfo, ModifyUserInfo, AddParentCommentInfo} from "../dto/Dto";
+import { LoginInfo ,SignInInfo , WritePostInfo,MainListInfo,ReadPostInfo,UserPostInfo, UserListRequestInfo, ModifyPostInfo, DeletePostInfo, ModifyUserInfo, AddParentCommentInfo, AddChildCommentInfo, ModifyCommentInfo} from "../dto/Dto";
 import { getAccessToken, getRefreshToken } from "./TokenAction";
 
 
@@ -232,7 +232,7 @@ export const createModifyUserInfoConfig = (requestBody:ModifyUserInfo): AxiosReq
   return config;
 };
 
-export const createAddCommentConfig = (requestBody:AddParentCommentInfo): AxiosRequestConfig => {
+export const createAddCommentConfig = (requestBody:AddChildCommentInfo|AddParentCommentInfo): AxiosRequestConfig => {
 
   const access = getAccessToken();
   const refresh = getRefreshToken();
@@ -253,7 +253,7 @@ export const createAddCommentConfig = (requestBody:AddParentCommentInfo): AxiosR
   return config;
 };
 
-export const createModifyCommentConfig = (requestBody:ModifyUserInfo): AxiosRequestConfig => {
+export const createModifyCommentConfig = (requestBody:ModifyCommentInfo): AxiosRequestConfig => {
 
   const access = getAccessToken();
   const refresh = getRefreshToken();
@@ -274,7 +274,7 @@ export const createModifyCommentConfig = (requestBody:ModifyUserInfo): AxiosRequ
   return config;
 };
 
-export const createDeleteCommentConfig = (requestBody:ModifyUserInfo): AxiosRequestConfig => {
+export const createDeleteCommentConfig = (requestBody:string): AxiosRequestConfig => {
 
   const access = getAccessToken();
   const refresh = getRefreshToken();
@@ -288,10 +288,59 @@ export const createDeleteCommentConfig = (requestBody:ModifyUserInfo): AxiosRequ
       'Refresh_Token': refresh,
       'Content-Type': 'application/json',
     },
-    data: requestBody,
+    params: {
+      rno: requestBody, 
+    },
     withCredentials: true,
   };
 
   return config;
 };
 
+export const createMyLikePostConfig = (requestBody:UserListRequestInfo): AxiosRequestConfig => {
+
+  const { recruit, category, order } = requestBody;
+  const access = getAccessToken();
+  const refresh = getRefreshToken();
+  const config: AxiosRequestConfig = {
+    baseURL: 'http://54.180.21.153:8080', 
+    url: `/user/userPostLike`,
+    method: 'GET',
+    headers: {
+      'Access_Token': access,
+      'Refresh_Token': refresh,
+      'Content-Type': 'application/json',
+    },
+    params: {
+      recruit,
+      category,
+      order,
+    },
+    withCredentials: true,
+  };
+
+  return config;
+};
+
+export const createGetAllUsersInfoConfig = (username?:string): AxiosRequestConfig => {
+
+
+  const access = getAccessToken();
+  const refresh = getRefreshToken();
+  const config: AxiosRequestConfig = {
+    baseURL: 'http://54.180.21.153:8080', 
+    url: `/admin/userAll`,
+    method: 'GET',
+    headers: {
+      'Access_Token': access,
+      'Refresh_Token': refresh,
+      'Content-Type': 'application/json',
+    },
+    params: {
+      username: username,
+    },
+    withCredentials: true,
+  };
+
+  return config;
+};

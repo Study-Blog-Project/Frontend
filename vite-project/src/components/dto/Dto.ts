@@ -87,6 +87,7 @@ export interface ReplyDto {
   createTime: string;
   children: ReplyDto[];
   myReply: boolean;
+  updateTime:string;
 }
 export interface ReplyResponseDto {
   getTotal: number;
@@ -169,4 +170,34 @@ export interface AddChildCommentInfo {
 export interface ModifyCommentInfo {
   replyId: number | undefined;
   content: string | undefined;
+}
+//유저정보조회
+export interface UserDto {
+  seq: number;
+  username: string;
+  nickname: string;
+  email: string;
+  role: string;
+}
+
+export interface SortDto {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
+}
+
+
+
+export interface UserResponseDto {
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  content: UserDto[];
+  number: number;
+  sort: SortDto;
+  first: boolean;
+  last: boolean;
+  numberOfElements: number;
+  pageable: PageableDto;
+  empty: boolean;
 }

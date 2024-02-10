@@ -9,6 +9,7 @@ import { getAccessToken,getRefreshToken } from '../../components/state/TokenActi
 import { UserListRequestInfo } from '../../components/dto/Dto';
 import MyPost from './MyPost';
 import MyInfo from './MyInfo';
+import MyLikePost from './MyLikePost';
 
 function MyPage() {
   const [selectedInfoTabContent, setSelectedInfoTabContent] = useState<string>('내가 작성한 글');
@@ -58,9 +59,9 @@ function MyPage() {
       );
     } else if (selectedInfoTabContent === '관심 스터디') {
       setRenderedComponent(
-        // 예시로 '관심 스터디'일 때 렌더링될 컴포넌트를 설정합니다.
+        
         <div>
-          {/* 관심 스터디에 관한 컴포넌트들 */}
+          <MyLikePost/>
         </div>
       );
     } else {

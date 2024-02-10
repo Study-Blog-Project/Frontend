@@ -12,7 +12,6 @@ import Pagination from '../../components/button/Pagination';
 import {Link, useNavigate, useSearchParams} from 'react-router-dom';
 import MainLoyout from "../../layout/MainLoyout";
 
-// <Tab onTabSelect={handleTabSelect} content={["전체","코테","프로젝트","cs","etc"]} defaultSelected={"전체"}></Tab>
 const categoryList = [
   { category: '전체', value: '전체' },
   { category: '코테', value: '코테' },

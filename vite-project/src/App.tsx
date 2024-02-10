@@ -9,24 +9,24 @@ import ReadPage from "./pages/post/ReadPage";
 
 import ModifyPostPage from "./pages/post/ModifyPostPage";
 import MyPage from "./pages/myPage/MyPage";
-
+import CheckUsersInfo from "./pages/admin/CheckUsersInfo";
 function App() {
 
 
   return (
     <CookiesProvider>
       <Routes>
-        <Route path="/" element={<TestPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/signIn" element={<SignInPage />}></Route>
-        <Route path="/main" element={<MainPage />}></Route>
-        <Route path="/write" element={<WritePage />}></Route>
+        <Route path="/" element={<CheckUsersInfo />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signIn" element={<SignInPage />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/write" element={<WritePage />} />
         <Route path="/read/:boardId" element={<ReadPage />} />
         <Route path="/modify/:boardId" element={<ModifyPostPage />} />
-        <Route path="/myPage" element={<MyPage />}>
+        <Route path="/myPage" element={<MyPage />} />
+        
           
-          
-        </Route>
+        
         
       </Routes>
     </CookiesProvider>

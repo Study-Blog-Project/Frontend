@@ -11,6 +11,8 @@ import { PostDto, AddParentCommentInfo, AddChildCommentInfo } from "../../compon
 import axios from "axios";
 import Comment from "../../components/comment/Comment";
 import Input from "../../components/input/Input";
+import { handleRegisterButtonClick } from "../../components/comment/handleCment";
+
 function ReadPage() {
   const { isLogin } = useAuthStore();
   const { boardId } = useParams();
@@ -34,6 +36,10 @@ function ReadPage() {
         if (response.data) {
           console.log(response.data);
           setPostResponse(response.data);
+          setParentCommentInfo({
+            boardId: parentCommentInfo.boardId,
+            content: "",
+          });
         }
       } catch (error: any) {
         console.log(error);
@@ -49,11 +55,11 @@ function ReadPage() {
       }
     }
   };
-  useEffect(() => {
-    
-    fetchData();
-  }, [boardId, isLogin]);
 
+  useEffect(() => {
+    console.log("^^")
+    fetchData();
+  }, []);
   const removePost = async () => {
     if (boardId) {
       const config = createRemovePostConfig({ boardId });
@@ -79,34 +85,6 @@ function ReadPage() {
     }
   };
 
-  const handleRegisterButtonClick = async () => {
-    // 댓글 등록
-    const config = createAddCommentConfig(parentCommentInfo);
-    try {
-      const response = await axios(config);
-  
-      if (response.data.statusCode === 200) {
-        console.log("성공", response.data);
-  
-        
-        fetchData(); //새로고침안해도 댓글이 보이게하고싶다.
-  
-        setParentCommentInfo({
-          boardId: parentCommentInfo.boardId,
-          content: "",
-        });
-      }
-    } catch (err: any) {
-      console.log(err);
-      if (err.response) {
-        console.error(err.response.data.message);
-      } else if (err.request) {
-        console.error(err.request);
-      } else {
-        console.error(err.message);
-      }
-    }
-  };
   
   
 
@@ -122,14 +100,14 @@ function ReadPage() {
 
   return (
     <div className="h-full w-full">
-      <div className="w-full ">
+      <div className="w-full border-b border-solid border-gray-100">
         <Header></Header>
       </div>
-      <div className="w-full h-full bg-red-100">
+      <div className="w-full h-full">
         <div className="ml-4">
           <Btn category="text" size="big" txtColor="black" txt={postResponse?.title}></Btn>
         </div>
-        <div className="flex w-full justify-between pb-2" style={{ borderBottom: "1px solid #B3B3B3" }}>
+        <div className="flex w-full justify-between pb-2 border-b border-solid border-gray-300">
           <div className="ml-4 flex justify-around ">
             <Btn category="text" txtColor="black" size="small" txt={postResponse?.userId}></Btn>
             <span className="mr-2">{postResponse?.createTime}</span>
@@ -158,18 +136,19 @@ function ReadPage() {
             )}
           </div>
         </div>
-        <div className="w-full min-h-72 max-h-full px-4 py-4">{postResponse?.content}</div>
-        <div className="w-full bg-blue-100 flex justify-between px-4 py-4">
+        <div className="w-full min-h-72 max-h-full px-4 py-4 border-b border-solid border-gray-300">{postResponse?.content}</div>
+        <div className="w-full mt-2 flex items-center justify-between px-4 py-4">
           <div className="w-4/5 h-full">
             <Input size="full" onChange={handleContentChange} placeHolder="댓글을 작성해보세요."></Input>
           </div>
           <div className="h-full py-4">
-            <Btn buttonColor="primary" onClick={handleRegisterButtonClick} size="default" txt="등록"></Btn>
+          <Btn buttonColor="primary" onClick={() => handleRegisterButtonClick(parentCommentInfo, fetchData)} size="default" txt="등록"></Btn>
+
           </div>
         </div>
-        <div className="w-full h-full min-h-72 max-h-full bg-red-100">
+        <div className="w-full h-full min-h-72 max-h-full">
           {postResponse?.replyResponseDto.replies.map((reply) => (
-            <Comment key={reply.replyId} reply={reply} />
+            <Comment key={reply.replyId} isMyreply={reply.myReply} fetchData={fetchData} reply={reply} boardId={boardId} />
           ))}
         </div>
       </div>
