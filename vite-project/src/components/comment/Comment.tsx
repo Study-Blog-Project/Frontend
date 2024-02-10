@@ -32,7 +32,7 @@ function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDt
   const handleModifySubmit = () => {
     setIsEditing(false);
     setModifyCommentInfo({ ...modifyCommentInfo, content: childCommentInfo.content });
-    handleRegisterButtonClick(childCommentInfo, fetchData);
+    handleRegisterButtonClick(childCommentInfo, fetchData); 
   };
 
   const isCmnt = () => {
@@ -74,7 +74,7 @@ function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDt
           <Btn category="text" txtColor="gray" handleBtn={() => deleteReply(reply.replyId)} size="small" txt="삭제"></Btn>
         </div>
       </div>
-      {(isEditing || isComment) && (
+      {(isEditing) && (
         <div className="w-full mt-2 flex items-center justify-between ">
           <div className="w-4/5 h-full">
             <Input
