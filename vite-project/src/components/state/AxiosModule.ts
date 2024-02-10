@@ -9,6 +9,67 @@ import { getAccessToken, getRefreshToken } from "./TokenAction";
 
 
 
+const BASE_URL = 'http://54.180.21.153:8080';
+
+export type ConfigType = {
+  method: string;
+  url: string;
+  params?: { [key: string]: any }; // eslint-disable-line
+  data?: { [key: string]: any }; // eslint-disable-line
+  headers?: any; // eslint-disable-line
+};
+
+export type AwaitApiType<T> = {
+  success: boolean;
+  message: string;
+  data: T;
+  total?: number;
+};
+
+export type HeadersType = {
+  [key: string]: any; // eslint-disable-line
+};
+
+export type AwaitApiResponseType<T> = {
+  success: boolean;
+  result: AwaitApiType<T> | null;
+  error: any; // eslint-disable-line
+  headers?: HeadersType;
+};
+
+export const authInstance = axios.create({
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+const awaitApi = async (
+  _config: ConfigType
+  // eslint-disable-next-line
+): Promise<AwaitApiResponseType<any>> => {
+  try {
+    const response = await authInstance({
+      baseURL: BASE_URL,
+      ..._config
+    });
+    return {
+      success: true,
+      result: response.data,
+      error: false,
+      headers: response.headers
+    };
+  } catch (e) {
+    return {
+      success: false,
+      result: null,
+      error: e
+    };
+  }
+};
+
+
+
 
 
 export const createSignInConfig = (requestBody: SignInInfo): AxiosRequestConfig => {
@@ -274,6 +335,18 @@ export const createModifyCommentConfig = (requestBody:ModifyCommentInfo): AxiosR
   return config;
 };
 
+
+// axios(config)
+//   .then((response) => {
+//     console.log(response);
+//     fetchData();
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
+
+
+
 export const createDeleteCommentConfig = (requestBody:string): AxiosRequestConfig => {
 
   const access = getAccessToken();
@@ -296,6 +369,26 @@ export const createDeleteCommentConfig = (requestBody:string): AxiosRequestConfi
 
   return config;
 };
+
+export const deleteComment = async (replyId: number) => {
+  const access = getAccessToken();
+  const refresh = getRefreshToken();
+
+  return awaitApi(
+    {
+      method: 'DELETE',
+      url: `/reply/deleteReply`,
+      headers: {
+        'Access_Token': access,
+        'Refresh_Token': refresh,
+        'Content-Type': 'application/json',
+      },
+      params: {
+        rno: replyId.toString(),
+      },
+    },
+  );
+}
 
 export const createMyLikePostConfig = (requestBody:UserListRequestInfo): AxiosRequestConfig => {
 

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Btn from "../button/Btn";
 import Input from "../input/Input";
-import { handleRegisterButtonClick } from "./handleCment";
-import { createDeleteCommentConfig, createModifyCommentConfig } from "../state/AxiosModule";
+import {handleRegisterButtonClick} from "./handleCment";
+import {createDeleteCommentConfig, createModifyCommentConfig, deleteComment} from "../state/AxiosModule";
 import axios from "axios";
-import { AddChildCommentInfo, ModifyCommentInfo, ReplyDto } from "../dto/Dto";
+import {AddChildCommentInfo, ModifyCommentInfo, ReplyDto} from "../dto/Dto";
 
-function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDto; boardId: number | undefined; onReplyButtonClick?: (replyId: number | null) => void }) {
-  const { reply, onReplyButtonClick, boardId, fetchData, isMyreply } = props;
+function Comment(props: { depth: number, isMyreply: boolean, fetchData: () => void, reply: ReplyDto; boardId: number | undefined; onReplyButtonClick?: (replyId: number | null) => void }) {
+  const {depth, reply, onReplyButtonClick, boardId, fetchData, isMyreply} = props;
 
   const [childCommentInfo, setChildCommentInfo] = useState({
     boardId: boardId,
@@ -22,7 +22,7 @@ function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDt
   const [isEditing, setIsEditing] = useState(false);
 
   const handleContentChange = (value: string) => {
-    setChildCommentInfo({ ...childCommentInfo, content: value });
+    setChildCommentInfo({...childCommentInfo, content: value});
   };
 
   const handleModifyButtonClick = () => {
@@ -31,29 +31,28 @@ function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDt
 
   const handleModifySubmit = () => {
     setIsEditing(false);
-    setModifyCommentInfo({ ...modifyCommentInfo, content: childCommentInfo.content });
+    setModifyCommentInfo({...modifyCommentInfo, content: childCommentInfo.content});
     handleRegisterButtonClick(childCommentInfo, fetchData);
   };
+
+  const handleCreateReply = () => {
+    setIsComment(false);
+    handleRegisterButtonClick(childCommentInfo, fetchData);
+  }
 
   const isCmnt = () => {
     setIsComment(!isComment);
   };
 
-  const deleteReply = (replyId:number) => {
+  const deleteReply = async (replyId: number) => {
     if (replyId) {
-      const id = replyId.toString();
-      const config = createDeleteCommentConfig(id);
-      axios(config)
-        .then((response) => {
-          console.log(response);
-          fetchData();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if ((await deleteComment(replyId)).success) {
+        fetchData();
+      } else {
+        console.log("삭제 실패");
+      }
     }
   };
-
 
 
   useEffect(() => {
@@ -61,40 +60,48 @@ function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDt
   }, [childCommentInfo]);
 
   return (
-    <div className="mx-2 my-1">
-      <div className="flex justify-between ">
-        <div className="flex">
-          <div className="mr-3">{reply.memberRequestDto?.nickname}</div>
-          <div>{new Date(reply.updateTime).toString()}</div>
+    <div className="ml-4 mt-4 flex-1">
+      <div className="border border-[1px] border-gray-200 p-4 rounded-lg">
+        {/* 이름, 작성일 */}
+        <div className="flex justify-between ">
+          <div className="flex items-center">
+            <div className="mr-3 font-bold text-gray-600">{reply.memberRequestDto?.nickname}</div>
+            <div className="text-gray-400 text-xs">{new Date(reply.updateTime).toString()}</div>
+          </div>
+          <div>
+            {!isEditing && (
+              <Btn category="text" txtColor="gray" handleBtn={handleModifyButtonClick} size="small" txt="수정"></Btn>
+            )}
+            <Btn category="text" txtColor="gray" handleBtn={() => deleteReply(reply.replyId)} size="small"
+                 txt="삭제"></Btn>
+          </div>
         </div>
+        {/* 수정모드 가 아닌경우 Contents */}
+        {!isEditing && <div className="p-4 min-h-18">{reply.content}</div>}
+        {/* 수정모드 */}
+        {(isEditing) && (
+          <div className="w-full mt-2 flex items-center justify-between ">
+            <div className="w-4/5 h-full">
+              <Input
+                size="full"
+                initialValue={reply.content}
+                value={childCommentInfo.content}
+                onChange={handleContentChange}
+              ></Input>
+            </div>
+            <div className="h-full">
+              <Btn buttonColor="primary" size="default" category="text" txtColor="gray" txt="등록"
+                   handleBtn={handleModifySubmit}></Btn>
+            </div>
+          </div>
+        )}
+        {/* 답글 버튼 */}
         <div>
-          {!isEditing && (
-            <Btn category="text" txtColor="gray" handleBtn={handleModifyButtonClick} size="small" txt="수정"></Btn>
-          )}
-          <Btn category="text" txtColor="gray" handleBtn={() => deleteReply(reply.replyId)} size="small" txt="삭제"></Btn>
+          {depth < 2 && <Btn buttonColor="primary" category="text" txtColor="gray" handleBtn={isCmnt} size="small" txt="답글"></Btn>}
         </div>
       </div>
-      {(isEditing || isComment) && (
-        <div className="w-full mt-2 flex items-center justify-between ">
-          <div className="w-4/5 h-full">
-            <Input
-              size="full"
-              initialValue={reply.content}
-              value={childCommentInfo.content}
-              onChange={handleContentChange}
-            ></Input>
-          </div>
-          <div className="h-full">
-            <Btn buttonColor="primary" size="default" category="text" txtColor="gray" txt="등록" handleBtn={handleModifySubmit}></Btn>
-          </div>
-        </div>
-        
-      )}
-      {!isEditing&&<div className="border-b border-solid border-gray-400">{reply.content}</div>}
-      <div>
-        <Btn buttonColor="primary" category="text" txtColor="gray" handleBtn={isCmnt} size="small" txt="답글"></Btn>
-      </div>
-      {isComment && (
+      {/* 댓글 작성 모드 */}
+      {(depth < 2 && isComment) && (
         <div className="w-full mt-2 flex items-center justify-between px-4 py-4">
           <div className="w-4/5 h-full">
             <Input
@@ -105,16 +112,21 @@ function Comment(props: {isMyreply:boolean,fetchData: () => void, reply: ReplyDt
             ></Input>
           </div>
           <div className="h-full">
-            <Btn buttonColor="primary" size="default" category="text" txtColor="gray" txt="등록" onClick={handleRegisterButtonClick}></Btn>
+            <Btn buttonColor="primary" size="default" category="text" txtColor="gray" txt="등록"
+                 handleBtn={handleCreateReply}></Btn>
           </div>
         </div>
       )}
+      {/* 댓글이 있는 경우 - 댓글 */}
       {reply.children.length > 0 && (
-        <div>
-          <strong>답글:</strong>
+        <div className="flex">
+          {depth === 0 &&  <div className="mt-2 ml-2 w-2 bg-gray-100"></div> }
+          <div className="flex flex-col flex-1">
           {reply.children.map((child) => (
-            <Comment fetchData={fetchData} isMyreply={reply.myReply} boardId={boardId} key={child.replyId} reply={child} onReplyButtonClick={onReplyButtonClick}></Comment>
+            <Comment depth={depth+1} fetchData={fetchData} isMyreply={reply.myReply} boardId={boardId} key={child.replyId} reply={child}
+                     onReplyButtonClick={onReplyButtonClick}></Comment>
           ))}
+          </div>
         </div>
       )}
     </div>

@@ -27,7 +27,7 @@ const MainLoyout = ({children}: MainLoyoutProps) => {
   const {isLogin} = useAuthStore();
   const location = useLocation();
   const { pathname } = location;
-  const { title, bannerColor, description } = banner[pathname];
+  // const { title, bannerColor, description } = banner[pathname];
 
 
   return (
@@ -35,11 +35,11 @@ const MainLoyout = ({children}: MainLoyoutProps) => {
       <div className="max-w-[1136px] mx-[auto]">
         <Header isLogin={isLogin}></Header>
       </div>
-      {banner[pathname] &&
-        <div className='flex justify-center'>
-          <Banner bannerColor={bannerColor} title={title}>{description}</Banner>
-        </div>
-      }
+      {/*{banner[pathname] &&*/}
+      {/*  <div className='flex justify-center'>*/}
+      {/*    <Banner bannerColor={bannerColor} title={title}>{description}</Banner>*/}
+      {/*  </div>*/}
+      {/*}*/}
       <div className="content max-w-[1136px] mx-[auto]">
         {children}
       </div>
