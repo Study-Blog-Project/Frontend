@@ -3,23 +3,35 @@ import React, { useEffect, useState } from 'react';
 import Btn from "../../components/button/Btn";
 import Tab from "../../components/tab/Tab";
 import PostDiv from "../../components/postDiv/PostDiv";
-import { createUserPostConfig } from "../../components/state/AxiosModule";
-import axios from 'axios';
+
+import axios, { AxiosRequestConfig } from 'axios';
 
 import { UserListRequestInfo, UserPostDto } from '../../components/dto/Dto';
 import { useNavigate } from 'react-router-dom';
-function MyPost() {
+import { createUserPostConfig } from '../../components/state/AxiosModule';
+interface AxiosConfigFunction {
+  (requestBody: UserListRequestInfo): AxiosRequestConfig;
+}
+
+
+interface MyPostProps {
+  axiosFn: AxiosConfigFunction;
+}
+
+function MyPost(){
+  
   const navigate = useNavigate();
   const [selectedRecruitTabContent, setSelectedRecruitTabContent] = useState<string>('전체');
   const [selectedCategoryTabContent, setSelectedCategoryTabContent] = useState<string>('전체');
   const [boardResponse, setBoardResponse] = useState<UserPostDto | null>(null);
   
-  
+
   const fetchMyPosts = ({ recruit, category,order }: UserListRequestInfo) => {
     // 서버로 요청을 보내어 해당 조건에 맞는 포스트 가져오기
     if (recruit !== null && category !== null && order!==null) {
       if (recruit === '전체') recruit = null;
       if (category === '전체') category = null;
+      
       const config = createUserPostConfig({ recruit, category,order });
       console.log("recruit:",recruit,"category:", category,"order:",order )
     axios(config)

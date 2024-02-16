@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactElement } from 'react';
+
 
 interface ModalProps {
   open: boolean;
@@ -7,13 +7,10 @@ interface ModalProps {
   onClose?: () => void;
 }
 
-interface containerRefStyle {
-  width?: string | undefined;
-  height?: string | undefined;
-}
 
-function Modal({ size = "medium", children, open=true, onClose }: ModalProps) {
-  const [style, setStyle] = useState<containerRefStyle>({});
+
+function Modal({ children, open=true, onClose }: ModalProps) {
+
 
   // useEffect(() => {
   //   let width = "0";

@@ -4,111 +4,6 @@ import axios from 'axios';
 import Input from '../../components/input/Input';
 import Btn from '../../components/button/Btn';
 import { UserResponseDto } from '../../components/dto/Dto';
-const test={
-  "totalElements": 0,
-  "totalPages": 0,
-  "size": 0,
-  "content": [
-    {
-      "seq": 1,
-      "username": "김미",
-      "nickname": "jac",
-      "email": "jac@naver.com",
-      "role": "ROLE_USER"
-    },{
-      seq: 2,
-      username: "홍길동",
-      nickname: "hong",
-      email: "hong@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 3,
-      username: "이순신",
-      nickname: "shin",
-      email: "shin@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 4,
-      username: "유승민",
-      nickname: "yoo",
-      email: "yoo@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 5,
-      username: "박지성",
-      nickname: "park",
-      email: "park@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 6,
-      username: "손흥민",
-      nickname: "son",
-      email: "son@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 7,
-      username: "김연아",
-      nickname: "kim",
-      email: "kim@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 8,
-      username: "류현진",
-      nickname: "ryu",
-      email: "ryu@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 9,
-      username: "이대호",
-      nickname: "lee",
-      email: "lee@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 10,
-      username: "박찬호",
-      nickname: "park",
-      email: "park@example.com",
-      role: "ROLE_USER"
-    },
-    {
-      seq: 11,
-      username: "김연경",
-      nickname: "kim",
-      email: "kim@example.com",
-      role: "ROLE_USER"
-    }
-  ],
-  "number": 0,
-  "sort": {
-    "empty": true,
-    "sorted": true,
-    "unsorted": true
-  },
-  "first": true,
-  "last": true,
-  "numberOfElements": 0,
-  "pageable": {
-    "offset": 0,
-    "sort": {
-      "empty": true,
-      "sorted": true,
-      "unsorted": true
-    },
-    "pageNumber": 0,
-    "pageSize": 0,
-    "unpaged": true,
-    "paged": true
-  },
-  "empty": true
-}
 
 function CheckUsersInfo() {
   const [nickName, setnickName] = useState("");
@@ -125,6 +20,7 @@ function CheckUsersInfo() {
     .then(response => {
       
       console.log(response.data);
+      setUserData(response.data);
     })
     .catch(error => {
       // 오류 처리
@@ -136,6 +32,7 @@ function CheckUsersInfo() {
     axios(config)
     .then(response => {
       console.log(response.data);
+      setUserData(response.data)
     })
     .catch(error => {
       // 오류 처리
@@ -144,12 +41,10 @@ function CheckUsersInfo() {
   }
   
   useEffect(()=>{
-    console.log(userData)
+    
   },[userData])
   useEffect(()=>{
-    //fetchAllData();
-    setUserData(test);
-    
+    fetchAllData();
   },[])
 
   return (

@@ -58,6 +58,7 @@ function ModifyPostPage() {
       if (response.data.statusCode === 200) {
 
         console.log('성공', response.data);
+        navigate(-1)
       }
     } catch (err: any) {
       console.log(err)

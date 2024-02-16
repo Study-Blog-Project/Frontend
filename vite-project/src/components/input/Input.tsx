@@ -10,14 +10,10 @@ interface InputProps {
   type?: "password" | "default"
 }
 
-interface InputStyle{
-  width?: string | undefined,
-  height?: string | undefined,
-}
 
 function Input({initialValue, placeHolder = "입력하세요", type="default", className="", onChange, value = "",  size="default",}:InputProps
 ) {
-  const [style, setStyle] = useState<InputStyle>({});
+
   const [inputValue, setInputValue] = useState<string>(value ?? "");
   
   useEffect(()=>
@@ -59,7 +55,6 @@ function Input({initialValue, placeHolder = "입력하세요", type="default", c
       {
         <div className={`input-wrap size-${size}`}>
           <input type={type === "password" ? "password" : "text"}
-                 style={style}
                  onChange={handleInputChange}
                  value={inputValue}
                  placeholder={placeHolder}

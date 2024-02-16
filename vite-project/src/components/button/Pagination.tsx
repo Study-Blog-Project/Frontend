@@ -44,10 +44,10 @@ function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) 
 
   const handlePageChange = (page: number) => {
     console.log("selectedPage"+selectedPage)
-    console.log("currentPage"+currentPage)
     setSelectedPage(page);
     onPageChange(page);
   };
+
 
   return (
     <div >

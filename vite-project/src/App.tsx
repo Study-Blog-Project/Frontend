@@ -10,13 +10,14 @@ import ReadPage from "./pages/post/ReadPage";
 import ModifyPostPage from "./pages/post/ModifyPostPage";
 import MyPage from "./pages/myPage/MyPage";
 import CheckUsersInfo from "./pages/admin/CheckUsersInfo";
+
 function App() {
 
 
   return (
     <CookiesProvider>
       <Routes>
-        <Route path="/" element={<CheckUsersInfo />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signIn" element={<SignInPage />} />
         <Route path="/main" element={<MainPage />} />
@@ -24,10 +25,8 @@ function App() {
         <Route path="/read/:boardId" element={<ReadPage />} />
         <Route path="/modify/:boardId" element={<ModifyPostPage />} />
         <Route path="/myPage" element={<MyPage />} />
-        
-          
-        
-        
+        <Route path="/admin/checkUsersInfo" element={<CheckUsersInfo />} />
+        <Route path="/admin/dashBoard" element={<MyPage />} />
       </Routes>
     </CookiesProvider>
   );

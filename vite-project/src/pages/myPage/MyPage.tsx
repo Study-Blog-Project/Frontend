@@ -49,7 +49,7 @@ function MyPage() {
     // 여기서 selectedInfoTabContent에 따라 렌더링될 컴포넌트를 설정합니다.
     if (selectedInfoTabContent === '내가 작성한 글') {
       setRenderedComponent(
-        <MyPost></MyPost>
+        <MyPost createUserPostConfig={createUserPostConfig}></MyPost>
       );
     } else if (selectedInfoTabContent === '사용자 정보') {
       setRenderedComponent(
@@ -57,7 +57,7 @@ function MyPage() {
           <MyInfo></MyInfo>
         </div>
       );
-    } else if (selectedInfoTabContent === '관심 스터디') {
+    } else if (selectedInfoTabContent === '관심 글') {
       setRenderedComponent(
         
         <div>

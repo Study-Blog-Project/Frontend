@@ -35,20 +35,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
         set({ isLogin: true });
         console.log('성공', response.data);
       }
-    }  catch (error: any) {
+    }  catch (error: unknown) {
       console.log(error)
-      if (error.response) {
-        const { status, message } = error.response;
-        console.log(status)
-        console.log(message)
-        if (status === 404) {
-          if (message === '사용자를 찾지 못했습니다.') {
-            console.error('User not found.');
-          } else {
-            console.error(message);
-          }
-        }
-      } 
+
     }
   },
   logout: () => set({ isLogin: false }),

@@ -8,6 +8,7 @@ import axios from "axios";
 import { createWriteConfig } from "../../components/state/AxiosModule";
 import SelectComponent from "../../components/select/Select";
 import { getNickName } from "../../components/state/TokenAction";
+import { useNavigate } from "react-router-dom";
 
 
 function WritePage() {
@@ -18,7 +19,7 @@ function WritePage() {
     {"value": "코테", "label": "코테"},
     {"value": "프로젝트", "label": "프로젝트"},
   ]
-  
+  const navigate=useNavigate();
 
   const [WriteInfo, setWriteInfo] = useState<WritePostInfo>({
     content: "",
@@ -47,6 +48,7 @@ function WritePage() {
   
       if (response.data.statusCode === 200) {
         console.log('성공', response.data);
+        navigate(-1)
       }
     } catch (error: any) {
       console.error(error.message);

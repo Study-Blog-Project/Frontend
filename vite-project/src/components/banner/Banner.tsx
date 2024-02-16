@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+
 import './style.css';
 
 interface BannerProps{
@@ -8,23 +8,12 @@ interface BannerProps{
   handleBanner?:() => void;
   children?:React.ReactNode;
 }
-interface textStyle {
-  fontSize?: string;
-  fontWeight?:string;
-  color?: string;
-}
-interface BannerStyle{
-  backgroundColor ?: string | undefined,
-  width?: string | undefined,
-  height?: string | undefined,
-  border?: string | undefined,
-  borderRadius?:string | undefined,
-}
+
+
 function Banner({
                   bannerColor="primary",
                   title="default",
-                  className="",
-                  handleBanner=undefined,
+                 
                   children,
 }:BannerProps) {
 

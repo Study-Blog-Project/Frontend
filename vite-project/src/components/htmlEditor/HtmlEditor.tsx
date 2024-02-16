@@ -1,6 +1,6 @@
 import  { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import the styles
+import 'react-quill/dist/quill.snow.css'; 
 
 interface HtmlEditorProps{
   initialValue?: string;
