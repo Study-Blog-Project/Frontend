@@ -271,6 +271,26 @@ export const createRemovePostConfig = (requestBody: DeletePostInfo): AxiosReques
   return config;
 };
 
+export const createAdminRemovePostConfig = (boardId:string): AxiosRequestConfig => {
+ 
+  const access = getAccessToken();
+  const refresh = getRefreshToken();
+  const config: AxiosRequestConfig = {
+    baseURL: 'http://54.180.21.153:8080', 
+    url: `/board/member/${boardId}?role=ROLE_ADMIN`,
+    method: 'DELETE',
+    headers: {
+      'Access_Token': access,
+      'Refresh_Token': refresh,
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+
+  return config;
+};
+
+
 export const createGetUserInfoConfig = (): AxiosRequestConfig => {
 
   const access = getAccessToken();

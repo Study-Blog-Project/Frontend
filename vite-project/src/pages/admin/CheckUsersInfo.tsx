@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createGetAllUsersInfoConfig } from '../../components/state/AxiosModule';
 import axios from 'axios';
 import Input from '../../components/input/Input';

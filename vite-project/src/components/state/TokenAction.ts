@@ -1,5 +1,9 @@
 import { Cookies } from "react-cookie";
 
+interface CookieOptions {
+  path: string;
+}
+
 const cookies = new Cookies();
 export const setNickName = (nickName: string) => {
   removeNickName();
@@ -16,9 +20,12 @@ export const removeNickName = () => {
 };
 
 
-export const setCookie = (name: string, value: string, options?: any) => {
+
+export const setCookie = (name: string, value: string, options?: CookieOptions) => {
   return cookies.set(name, value, { ...options });
 };
+
+
 
 export const getCookie = (name: string) => {
   return cookies.get(name);

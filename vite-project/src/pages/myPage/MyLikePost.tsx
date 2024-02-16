@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import Btn from "../../components/button/Btn";
+
 import Tab from "../../components/tab/Tab";
 import PostDiv from "../../components/postDiv/PostDiv";
-import { createMyLikePostConfig, createUserPostConfig } from "../../components/state/AxiosModule";
+import { createMyLikePostConfig } from "../../components/state/AxiosModule";
 import axios from 'axios';
 
 import { UserListRequestInfo, UserPostDto } from '../../components/dto/Dto';
@@ -80,9 +80,6 @@ function MyLikePost() {
       </div>
       <div className="w-full bg-green-100 h-24 flex pl-6 items-center justify-between border-b border-solid border-gray-400 ">
         <Tab content={["전체", "코테", "프로젝트", "CS", "ETC"]} onTabSelect={handleCategoryTabSelect} />
-        <div className="basis-32 pr-8 ">
-          <Btn size="big" txt="글쓰기" buttonColor="secondary" />
-        </div>
       </div>
       <div className="w-full flex flex-col">
         {boardResponse && PostDivs(boardResponse)}

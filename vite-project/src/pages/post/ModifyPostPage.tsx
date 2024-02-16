@@ -60,16 +60,9 @@ function ModifyPostPage() {
         console.log('성공', response.data);
         navigate(-1)
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err)
-      if (err.response) {
-        console.error(err.response.data.message);
-      } else if (err.request) {
-        console.error(err.request);
-      } else {
-        console.error(err.message);
-      }
-
+      
     }
 
   };

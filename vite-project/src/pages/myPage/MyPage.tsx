@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Header from "../../components/header/Header";
-import Btn from "../../components/button/Btn";
 import Tab from "../../components/tab/Tab";
-import PostDiv from "../../components/postDiv/PostDiv";
-import { createUserPostConfig,createGetUserInfoConfig } from "../../components/state/AxiosModule";
-import axios from 'axios';
-import { getAccessToken,getRefreshToken } from '../../components/state/TokenAction';
-import { UserListRequestInfo } from '../../components/dto/Dto';
+
 import MyPost from './MyPost';
 import MyInfo from './MyInfo';
 import MyLikePost from './MyLikePost';
+import { useAuthStore } from '../../components/state/Login';
 
 function MyPage() {
   const [selectedInfoTabContent, setSelectedInfoTabContent] = useState<string>('내가 작성한 글');
+  const { role } = useAuthStore();
 
-  const [page,setPage] = useState<number>(0);
+  //const [page,setPage] = useState<number>(0);
 
   const [renderedComponent, setRenderedComponent] = useState<JSX.Element | null>(null); 
   
@@ -29,18 +26,7 @@ function MyPage() {
 
 
 
-    const modifyMyInfos = () => {
-      const config = createGetUserInfoConfig();
-      axios(config)
-        .then(response => {
-          // 가져온 포스트 처리
-          console.log(response.data);
-        })
-        .catch(error => {
-          // 오류 처리
-          console.error(error);
-        });
-      }  
+
   
   
 
@@ -49,7 +35,7 @@ function MyPage() {
     // 여기서 selectedInfoTabContent에 따라 렌더링될 컴포넌트를 설정합니다.
     if (selectedInfoTabContent === '내가 작성한 글') {
       setRenderedComponent(
-        <MyPost createUserPostConfig={createUserPostConfig}></MyPost>
+        <MyPost role={role}></MyPost>
       );
     } else if (selectedInfoTabContent === '사용자 정보') {
       setRenderedComponent(
@@ -76,12 +62,12 @@ function MyPage() {
         <Header />
       </div>
       <div className="flex flex-row w-full h-full">
-        <div className="bg-red-100 basis-1/3">
-          <div className="w-full h-1/4 bg-blue-100 mt-10">
+        <div className=" basis-1/3">
+          <div className="w-full h-1/4  mt-10">
             <Tab className="flex flex-col p-2" content={["내가 작성한 글", "사용자 정보", "관심 글"]} onTabSelect={handleInfoTabSelect} />
           </div>
         </div>
-        <div className="bg-blue-100 basis-3/4 ">
+        <div className=" basis-3/4 ">
           {renderedComponent}
         </div>
       </div>

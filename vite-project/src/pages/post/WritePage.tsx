@@ -50,23 +50,8 @@ function WritePage() {
         console.log('성공', response.data);
         navigate(-1)
       }
-    } catch (error: any) {
-      console.error(error.message);
-  
-      // error.response가 undefined인 경우 처리
-      if (!error.response) {
-        console.error(error);
-        return;
-      }
-  
-      const { status, data } = error.response;
-      if (status === 404) {
-        if (data.message === '사용자를 찾지 못했습니다.') {
-          console.error('사용자를 찾지 못했습니다.');
-        } else {
-          console.error(data.message);
-        }
-      }
+    } catch (error: unknown) {
+      console.error(error);
     }
   };
   

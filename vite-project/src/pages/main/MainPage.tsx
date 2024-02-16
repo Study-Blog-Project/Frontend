@@ -1,16 +1,15 @@
 import PostDiv from "../../components/postDiv/PostDiv";
-import Banner from "../../components/banner/Banner";
+
 import Input from "../../components/input/Input";
 import Btn from "../../components/button/Btn";
 import Tab from "../../components/tab/Tab";
-import { BoardResponseDto, MainListInfo } from "../../components/dto/Dto";
-import React, { useEffect, useState } from "react";
+import { BoardResponseDto } from "../../components/dto/Dto";
+import { useEffect, useState } from "react";
 import { createMainlistConfig } from "../../components/state/AxiosModule";
 import axios from "axios";
 import Pagination from "../../components/button/Pagination";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import MainLoyout from "../../layout/MainLoyout";
-import { useAuthStore } from "../../components/state/Login";
 
 const categoryList = [
   { category: "전체", value: "전체" },
@@ -30,11 +29,7 @@ function MainPage() {
   const [searchParams, setSearchParams] = useSearchParams(); // URLSearchParams
   //const {isLogin} = useAuthStore();
   const [page, setPage] = useState<string | null>("0");
-  const [mainListInfo, setMainListInfo] = useState<MainListInfo>({
-    category: "CS",
-    page: "0",
-    order: "0",
-  });
+
   const [boardResponse, setBoardResponse] = useState<BoardResponseDto | null>(null);
 
   const [selectedTabContent, setSelectedTabContent] = useState<string | null>("전체");
@@ -54,20 +49,22 @@ function MainPage() {
         title: searchValue,
       });
     }
-    const config = createMainlistConfig({
-      category: selectedTabContent,
-      order: selectedOrderContent,
-      page: page,
-      title: searchValue,
-    });
-    console.log(config);
-    axios(config)
-      .then((response) => {
-        setBoardResponse(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
+    if (selectedTabContent !== null && selectedOrderContent !== null && page !== null && searchValue !== null) {
+      const config = createMainlistConfig({
+        category: selectedTabContent,
+        order: selectedOrderContent,
+        page: page,
+        title: searchValue,
       });
+      console.log(config);
+      axios(config)
+        .then((response) => {
+          setBoardResponse(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
   const handleCategoryTabSelect = (content: string) => {
     setSelectedTabContent(content); // 선택된 탭 콘텐츠 설정
@@ -91,19 +88,21 @@ function MainPage() {
         order: selectedOrderContent,
       });
     }
-    const config = createMainlistConfig({
-      category: selectedTabContent,
-      order: selectedOrderContent,
-      page: page,
-    });
-    console.log(config);
-    axios(config)
-      .then((response) => {
-        setBoardResponse(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
+    if (selectedTabContent !== null && selectedOrderContent !== null) {
+      const config = createMainlistConfig({
+        category: selectedTabContent,
+        order: selectedOrderContent,
+        page: page,
       });
+      console.log(config);
+      axios(config)
+        .then((response) => {
+          setBoardResponse(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   // useEffect(()=>{
@@ -122,9 +121,6 @@ function MainPage() {
   //     });
   //   }
   // },[isLogin])
-  useEffect(() => {
-    console.log("AAA");
-  }, [mainListInfo]);
 
   // Category 설정
   const getCategory = () => {
@@ -151,50 +147,52 @@ function MainPage() {
 
     const selectedCategory = categoryList.find((x) => x.category === category)?.value ?? "전체";
     console.log(selectedCategory);
-
-    const config = createMainlistConfig({
-      category: selectedCategory,
-      order: selectedOrderContent,
-      page: page,
-    });
-    console.log(config);
-    axios(config)
-      .then((response) => {
-        setBoardResponse(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
+    if (page !== null && selectedOrderContent !== null) {
+      const config = createMainlistConfig({
+        category: selectedCategory,
+        order: selectedOrderContent,
+        page: page,
       });
+      console.log(config);
+      axios(config)
+        .then((response) => {
+          setBoardResponse(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const setOrder = (order: string) => {
-    // Order 설정
     if (selectedTabContent !== null && page !== null) {
       setSearchParams({
         page: "0",
         category: selectedTabContent,
-        order: orderList.find((x) => x.order === selectedOrderContent)?.value ?? "1",
+        order:order
       });
     }
-
-    const selectedOrder = orderList.find((x) => x.order === order)?.value ?? "1";
+    console.log(orderList)
+    const selectedOrder = order
     console.log(selectedOrder);
 
-    const config = createMainlistConfig({
-      category: selectedTabContent,
-      order: selectedOrder,
-      page: page,
-    });
-    console.log(config);
-
-    axios(config)
-      .then((response) => {
-        console.log(response.data);
-        setBoardResponse(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
+    if (selectedTabContent !== null && page !== null) {
+      const config = createMainlistConfig({
+        category: selectedTabContent,
+        order: selectedOrder,
+        page: page,
       });
+      console.log(config);
+
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          setBoardResponse(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -203,7 +201,7 @@ function MainPage() {
       const { pageable } = boardResponse;
 
       if (pageable) {
-        const { pageNumber, pageSize, sort, offset, paged, unpaged } = pageable;
+        const { pageNumber } = pageable;
         setPage(pageNumber.toString());
       }
     }
@@ -212,7 +210,7 @@ function MainPage() {
   const fetchData = async () => {
     const config = createMainlistConfig({
       category: searchParams.get("category") || "전체",
-      order: Number(searchParams.get("order")) || 0,
+      order: searchParams.get("order") || "0",
     });
     console.log(config);
     axios(config)
@@ -225,19 +223,10 @@ function MainPage() {
   };
 
   useEffect(() => {
-    console.log("^^^");
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (selectedTabContent !== null && selectedOrderContent !== null && page !== null && page !== null) {
-      setMainListInfo({
-        category: selectedTabContent,
-        order: selectedOrderContent,
-        page: page,
-      });
-    }
-  }, [selectedTabContent, selectedOrderContent, page]);
+
 
   const linkToPost = (boardId: number) => {
     navigate(`/read/${boardId}`);

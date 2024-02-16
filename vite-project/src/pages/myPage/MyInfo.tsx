@@ -4,7 +4,7 @@ import { UserInfoDto,ModifyUserInfo } from "../../components/dto/Dto";
 import { useEffect, useState } from "react";
 import Input from "../../components/input/Input";
 import Btn from "../../components/button/Btn";
-import { useNavigate } from "react-router-dom";
+
 
 function MyInfo() {
   const [infoResponse, setInfoResponse] = useState<UserInfoDto | null>(null);

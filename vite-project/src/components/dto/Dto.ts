@@ -26,9 +26,9 @@ export interface ModifyPostInfo {
 //-------------------------------메인페이지
 export interface MainListInfo {
   order: string;
-  page:string;
+  page?:string;
   category: string;
-  title: string;
+  title?: string;
 }
 
 export interface BoardItemDto {

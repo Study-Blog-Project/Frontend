@@ -13,7 +13,8 @@ interface headerProps{
   isLogin?:boolean
 }
 function Header({isLogin}:headerProps) {
-  const {logout} = useAuthStore();
+  const {logout,role} = useAuthStore();
+
   const [loginModal, setLoginModal] = useState<boolean>(false);
   const [signInModal, setSigninModal] = useState<boolean>(false);
   const renderLoginModal = () =>{
@@ -100,13 +101,22 @@ function Header({isLogin}:headerProps) {
   const goWirtePage = () =>{
     navigate("/write");
   }
+  const goCheckUsersInfoPage = () =>{
+    navigate("/admin/checkUsersInfo");
+  }
+  const goDashBoardPage = () =>{
+    navigate("/admin/dashBoard");
+  }
+  const goMainPage = () =>{
+    navigate("/main");
+  }
   return (
     <div className='flex justify-between items-center px-2 py-2 mb-2'>
       {/* 회원가입 모달 */}
       <Modal open={signInModal} onClose={() => setSigninModal(false)}>
         <div className="relative flex flex-col items-center z-10 rounded-3xl ">
           <div className=' py-5 text-2xl font-extrabold'>회원가입</div>
-          <div className=" flex flex-col w-full">
+          <div className=" flex flex-col w-4/5">
             <CustomLabel text={"이름"}></CustomLabel>
             <Input value={signInInfo.name}
                    onChange={(value) => handleInputChange("name", value)}
@@ -138,7 +148,7 @@ function Header({isLogin}:headerProps) {
         <div className='mt-5'>
           <Btn className="mt-3 mb-3" size='small' txt='이미지'></Btn>
         </div>
-        <div className="flex mb-3 mt-8 flex-col justify-center ml-5 w-full">
+        <div className="flex mb-3 mt-8 flex-col w-4/5">
           <Input value={loginInfo.email}
           onChange={(value) => handleLoginInputChange("email", value)} 
           size='full' className='mb-4' placeHolder={"이메일"}></Input>
@@ -160,15 +170,20 @@ function Header({isLogin}:headerProps) {
         이미지
       </div>}
       <div className='flex-grow text-center'>
-        로고
+      <Btn category='outlined' className='mr-4' handleBtn={goMainPage} txt="메인" size="small"></Btn>
       </div>
       <div>
         {!isLogin && <div className='flex'>
-          <Btn category='outlined' handleBtn={renderLoginModal} txt="로그인" size="small"></Btn>
+          <Btn category='outlined' className='mr-4' handleBtn={renderLoginModal} txt="로그인" size="small"></Btn>
           <Btn category='outlined' handleBtn={renderSignInModal} buttonColor="headerBtn" txt="회원가입" size="small"></Btn>
         </div>}
         {isLogin && <div className='flex'>
           <Btn category='outlined' className='mr-4' handleBtn={logOut} size="small"  txt="로그아웃"></Btn>
+          {role === "admin" &&<div className='mr-4'>
+            <Btn category='outlined' className='mr-4' handleBtn={goCheckUsersInfoPage} size="small"  txt="회원 정보 조회"></Btn>
+            <Btn category='outlined' handleBtn={goDashBoardPage} size="small"  txt="전체 글조회"></Btn>
+          </div>
+          }
           <Btn category='outlined' className='mr-4' handleBtn={goMyPage} size="small"  txt="마페"></Btn>
           <Btn category='outlined' handleBtn={goWirtePage} size="small"  txt="글쓰기"></Btn>
         </div>}

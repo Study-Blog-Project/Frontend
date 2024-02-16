@@ -1,13 +1,13 @@
 //import  { useState } from 'react'
-import Header from "../../components/header/Header";
+
 import Btn from "../../components/button/Btn";
 //import search from '../../assets/search.png'
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthStore } from "../../components/state/Login";
 //import useAuthStore from '../../components/state/Login';
 import { useEffect, useState } from "react";
-import { createAddCommentConfig, createReadPostConfig, createRemovePostConfig, createPostLikePostConfig } from "../../components/state/AxiosModule";
-import { PostDto, AddParentCommentInfo, AddChildCommentInfo } from "../../components/dto/Dto";
+import {  createReadPostConfig, createRemovePostConfig, createPostLikePostConfig, createAdminRemovePostConfig } from "../../components/state/AxiosModule";
+import { PostDto, AddParentCommentInfo } from "../../components/dto/Dto";
 import axios from "axios";
 import Comment from "../../components/comment/Comment";
 import Input from "../../components/input/Input";
@@ -15,7 +15,7 @@ import { handleRegisterButtonClick } from "../../components/comment/handleCment"
 import MainLoyout from "../../layout/MainLoyout";
 
 function ReadPage() {
-  const { isLogin } = useAuthStore();
+  const { isLogin,role } = useAuthStore();
   const { boardId } = useParams();
   const [postResponse, setPostResponse] = useState<PostDto | null>(null);
   const navigate = useNavigate();
@@ -42,17 +42,9 @@ function ReadPage() {
             content: "",
           });
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.log(error);
-        const { status, data } = error.response;
-        console.log(data.message);
-        if (status === 404) {
-          if (data.message === "사용자를 찾지 못했습니다.") {
-            console.error("사용자를 찾지 못했습니다.");
-          } else {
-            console.error(data.message);
-          }
-        }
+        
       }
     }
   };
@@ -69,17 +61,9 @@ function ReadPage() {
         const response = await axios(config);
         console.log(response)
       
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.log(error);
-        const { status, data } = error.response;
-        console.log(data.message);
-        if (status === 404) {
-          if (data.message === "사용자를 찾지 못했습니다.") {
-            console.error("사용자를 찾지 못했습니다.");
-          } else {
-            console.error(data.message);
-          }
-        }
+        
       }
     }
   };
@@ -93,21 +77,31 @@ function ReadPage() {
           navigate(-1);
           
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.log(error);
-        const { status, data } = error.response;
-        console.log(data.message);
-        if (status === 404) {
-          if (data.message === "사용자를 찾지 못했습니다.") {
-            console.error("사용자를 찾지 못했습니다.");
-          } else {
-            console.error(data.message);
-          }
-        }
+        
       }
     }
   };
 
+  const adminRemovePost = async () => {
+
+    if (boardId) {
+      const config = createAdminRemovePostConfig( boardId );
+      console.log(config)
+      try {
+        const response = await axios(config);
+     
+        if (response) {
+          navigate(-1);
+          
+        }
+      } catch (error: unknown) {
+        console.log(error);
+        
+      }
+    }
+  };
   const handleModifyClick = () => {
     navigate(`/modify/${boardId}`, {
       state: {
@@ -133,10 +127,16 @@ function ReadPage() {
         </div>
         <div className="mr-4 flex justify-around ">
           <Btn buttonColor="primary" className="mr-2" txt="모집중" size="small"></Btn>
-          {postResponse?.myBoard && isLogin && (
+          {postResponse?.myBoard && isLogin && role === "user" &&(
             <div className="flex">
               <Btn handleBtn={handleModifyClick} className="mr-2" buttonColor="secondary" txt="수정" size="small"></Btn>
               {postResponse?.myBoard && <Btn handleBtn={removePost} buttonColor="headerBtn" txt="삭제" size="small"></Btn>}
+            </div>
+          )}
+          {postResponse?.myBoard && isLogin && role === "admin" &&(
+            <div className="flex">
+              
+              {postResponse?.myBoard && <Btn handleBtn={adminRemovePost} buttonColor="headerBtn" txt="관리자삭제" size="small"></Btn>}
             </div>
           )}
           {isLogin && !postResponse?.myBoard && (
@@ -160,7 +160,7 @@ function ReadPage() {
       {/* 댓글 목록 */}
       <div className="w-full h-full min-h-72 max-h-full pb-4">
         {postResponse?.replyResponseDto.replies.map((reply) => (
-          <Comment depth={0} key={reply.replyId} isMyreply={reply.myReply} fetchData={fetchData} reply={reply} boardId={boardId} />
+          <Comment depth={0} key={reply.replyId} isMyreply={reply.myReply} fetchData={fetchData} reply={reply} boardId={Number(boardId)} />
         ))}
       </div>
     </MainLoyout>
