@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Header from "../../components/header/Header";
-import Tab from "../../components/tab/Tab";
+import  { useEffect, useState } from 'react';
 
+import Tab from "../../components/tab/Tab";
+import MainLoyout from '../../layout/MainLoyout';
 import MyPost from './MyPost';
 import MyInfo from './MyInfo';
 import MyLikePost from './MyLikePost';
@@ -57,21 +57,20 @@ function MyPage() {
   }, [selectedInfoTabContent]);
 
   return (
+    <MainLoyout>
     <div className="h-full  w-full">
-      <div className="w-full ">
-        <Header />
-      </div>
-      <div className="flex flex-row w-full h-full">
-        <div className=" basis-1/3">
-          <div className="w-full h-1/4  mt-10">
-            <Tab className="flex flex-col p-2" content={["내가 작성한 글", "사용자 정보", "관심 글"]} onTabSelect={handleInfoTabSelect} />
+        <div className="flex flex-row w-full h-full">
+          <div className=" basis-1/3">
+            <div className="w-full h-1/4  mt-10">
+              <Tab className="flex flex-col p-2" content={["내가 작성한 글", "사용자 정보", "관심 글"]} onTabSelect={handleInfoTabSelect} />
+            </div>
+          </div>
+          <div className=" basis-3/4 ">
+            {renderedComponent}
           </div>
         </div>
-        <div className=" basis-3/4 ">
-          {renderedComponent}
-        </div>
       </div>
-    </div>
+    </MainLoyout>
   );
 }
 

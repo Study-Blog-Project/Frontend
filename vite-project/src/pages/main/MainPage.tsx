@@ -10,6 +10,7 @@ import axios from "axios";
 import Pagination from "../../components/button/Pagination";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MainLoyout from "../../layout/MainLoyout";
+import { useAuthStore } from "../../components/state/Login";
 
 const categoryList = [
   { category: "전체", value: "전체" },
@@ -27,7 +28,7 @@ const orderList = [
 function MainPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams(); // URLSearchParams
-  //const {isLogin} = useAuthStore();
+  const {isLogin} = useAuthStore();
   const [page, setPage] = useState<string | null>("0");
 
   const [boardResponse, setBoardResponse] = useState<BoardResponseDto | null>(null);
@@ -223,8 +224,9 @@ function MainPage() {
   };
 
   useEffect(() => {
+    console.log("^^")
     fetchData();
-  }, []);
+  }, [isLogin]);
 
 
 
