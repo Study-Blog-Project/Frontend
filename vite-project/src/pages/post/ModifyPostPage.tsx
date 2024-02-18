@@ -1,13 +1,13 @@
 
 import { useEffect, useState } from "react";
-import { ModifyPostInfo } from "../../components/dto/Dto"
+import { ModifyPostInfo, ModifyRecruitInfo } from "../../components/dto/Dto"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Banner from "../../components/banner/Banner";
 import Input from "../../components/input/Input";
 import SelectComponent from "../../components/select/Select";
 import HtmlEditor from "../../components/htmlEditor/HtmlEditor";
 import Btn from "../../components/button/Btn";
-import { createModifyPostConfig } from "../../components/state/AxiosModule";
+import { createModifyPostConfig, createModifyRecruitConfig } from "../../components/state/AxiosModule";
 import axios from "axios";
 
 function ModifyPostPage() {
@@ -17,6 +17,10 @@ function ModifyPostPage() {
     {"value": "코테", "label": "코테"},
     {"value": "프로젝트", "label": "프로젝트"},
   ]
+  const recruit = [
+    {"value": "모집중", "label": "모집중"},
+    {"value": "모집완료", "label": "모집완료"},
+  ]
   const { boardId } = useParams();
   const location = useLocation();
   const [ModifyPostInfo, setModifyPostInfo] = useState<ModifyPostInfo>({
@@ -25,7 +29,12 @@ function ModifyPostPage() {
     content: "",
     boardId: boardId || ""
   });
-  
+
+  const [ModifyRecruitInfo, setModifyRecruitInfo] = useState<ModifyRecruitInfo>({
+    boardId: boardId || "",
+    recruit: "모집중"||"모집완료",
+  });
+
   const handleInputChange = (key: keyof ModifyPostInfo, value: string) => {
     const sanitizedValue = value.replace(/<\/?p>/g, '');
     setModifyPostInfo({
@@ -34,8 +43,16 @@ function ModifyPostPage() {
     });
   };
 
-  useEffect(() => {
+  const handleRecruitChange = (key: keyof ModifyRecruitInfo, value: string) => {
+    const sanitizedValue = value.replace(/<\/?p>/g, '');
+    setModifyRecruitInfo({
+      ...ModifyRecruitInfo,
+      [key]: sanitizedValue,
+    });
+  };
 
+
+  useEffect(() => {
     const { title, content ,category} = location.state;
     setModifyPostInfo({
       ...ModifyPostInfo,
@@ -48,9 +65,9 @@ function ModifyPostPage() {
   const goBack = () =>{
     navigate(-1)
   }
-
   const submitInfo = async () => {
     const config = createModifyPostConfig(ModifyPostInfo);
+    const recruitConfig = createModifyRecruitConfig(ModifyRecruitInfo)
     console.log(ModifyPostInfo)
     try {
       const response = await axios(config);
@@ -58,13 +75,23 @@ function ModifyPostPage() {
       if (response.data.statusCode === 200) {
 
         console.log('성공', response.data);
+      }
+    } catch (err: unknown) {
+      console.log(err)  
+    }
+
+    try {
+      const response = await axios(recruitConfig);
+
+      if (response.data.statusCode === 200) {
+
+        console.log('성공', response.data);
         navigate(-1)
       }
     } catch (err: unknown) {
-      console.log(err)
-      
+      console.log(err)  
     }
-
+    
   };
 
   return (
@@ -77,10 +104,10 @@ function ModifyPostPage() {
       </Input>
     </div>
     <div className="flex ml-14 pb-4">
-      <span>
-        모집 구분
-      </span>
-      <div className="ml-8">
+      <div className="w-auto">
+        <SelectComponent defaultValue="모집중" onSelect={(value) => handleRecruitChange("recruit", value)} data={recruit}></SelectComponent>
+      </div>
+      <div className="ml-8 w-auto">
         <SelectComponent defaultValue="cs" onSelect={(value) => handleInputChange("category", value)} data={data}></SelectComponent>
       </div>
     </div>

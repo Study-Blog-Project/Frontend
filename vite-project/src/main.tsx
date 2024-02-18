@@ -4,6 +4,7 @@ import './index.css'
 import { BrowserRouter } from "react-router-dom";
 import axios from 'axios';
 
+
 axios.defaults.withCredentials = true;
 axios.defaults.headers["content-type"] = "application/json";
 ReactDOM.createRoot(document.getElementById('root')!).render(

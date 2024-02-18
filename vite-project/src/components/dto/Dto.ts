@@ -23,6 +23,11 @@ export interface ModifyPostInfo {
   category: string;
   title: string;
 }
+
+export interface ModifyRecruitInfo {
+  boardId: string;
+  recruit: string;
+}
 //-------------------------------메인페이지
 export interface MainListInfo {
   order: string;
@@ -97,6 +102,7 @@ export interface ReplyResponseDto {
 }
 
 export interface PostDto {
+  recruit:string;
   title: string;
   userId: string;
   createTime: string;

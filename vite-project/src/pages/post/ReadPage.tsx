@@ -6,7 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuthStore } from "../../components/state/Login";
 //import useAuthStore from '../../components/state/Login';
 import { useEffect, useState } from "react";
-import {  createReadPostConfig, createRemovePostConfig, createPostLikePostConfig, createAdminRemovePostConfig } from "../../components/state/AxiosModule";
+import {
+  createReadPostConfig,
+  createRemovePostConfig,
+  createPostLikePostConfig,
+  createAdminRemovePostConfig,
+} from "../../components/state/AxiosModule";
 import { PostDto, AddParentCommentInfo } from "../../components/dto/Dto";
 import axios from "axios";
 import Comment from "../../components/comment/Comment";
@@ -15,7 +20,7 @@ import { handleRegisterButtonClick } from "../../components/comment/handleCment"
 import MainLoyout from "../../layout/MainLoyout";
 
 function ReadPage() {
-  const { isLogin,role } = useAuthStore();
+  const { isLogin, role } = useAuthStore();
   const { boardId } = useParams();
   const [postResponse, setPostResponse] = useState<PostDto | null>(null);
   const navigate = useNavigate();
@@ -44,7 +49,6 @@ function ReadPage() {
         }
       } catch (error: unknown) {
         console.log(error);
-        
       }
     }
   };
@@ -59,11 +63,9 @@ function ReadPage() {
       const config = createPostLikePostConfig(boardId);
       try {
         const response = await axios(config);
-        console.log(response)
-      
+        console.log(response);
       } catch (error: unknown) {
         console.log(error);
-        
       }
     }
   };
@@ -72,33 +74,28 @@ function ReadPage() {
       const config = createRemovePostConfig({ boardId });
       try {
         const response = await axios(config);
-     
+
         if (response) {
           navigate(-1);
-          
         }
       } catch (error: unknown) {
         console.log(error);
-        
       }
     }
   };
 
   const adminRemovePost = async () => {
-
     if (boardId) {
-      const config = createAdminRemovePostConfig( boardId );
-      console.log(config)
+      const config = createAdminRemovePostConfig(boardId);
+      console.log(config);
       try {
         const response = await axios(config);
-     
+
         if (response) {
           navigate(-1);
-          
         }
       } catch (error: unknown) {
         console.log(error);
-        
       }
     }
   };
@@ -111,7 +108,9 @@ function ReadPage() {
       },
     });
   };
-
+  useEffect(()=>{
+    console.log(postResponse)
+  },[postResponse])
   return (
     <MainLoyout>
       {/* 타이틀 */}
@@ -126,16 +125,15 @@ function ReadPage() {
           <span>{postResponse?.viewCnt}</span>
         </div>
         <div className="mr-4 flex justify-around ">
-          <Btn buttonColor="primary" className="mr-2" txt="모집중" size="small"></Btn>
-          {postResponse?.myBoard && isLogin && role === "user" &&(
+          <Btn buttonColor="primary" className="mr-2" txt={postResponse?.recruit} size="small"></Btn>
+          {postResponse?.myBoard && isLogin && (
             <div className="flex">
               <Btn handleBtn={handleModifyClick} className="mr-2" buttonColor="secondary" txt="수정" size="small"></Btn>
               {postResponse?.myBoard && <Btn handleBtn={removePost} buttonColor="headerBtn" txt="삭제" size="small"></Btn>}
             </div>
           )}
-          {postResponse?.myBoard && isLogin && role === "admin" &&(
+          {postResponse?.myBoard && isLogin && role === "admin" && (
             <div className="flex">
-              
               {postResponse?.myBoard && <Btn handleBtn={adminRemovePost} buttonColor="headerBtn" txt="관리자삭제" size="small"></Btn>}
             </div>
           )}

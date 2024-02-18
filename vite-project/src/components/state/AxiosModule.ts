@@ -1,6 +1,6 @@
 
 import axios, { AxiosRequestConfig } from "axios";
-import { LoginInfo ,SignInInfo , WritePostInfo, UserListRequestInfo, ModifyPostInfo, DeletePostInfo, ModifyUserInfo, AddParentCommentInfo, AddChildCommentInfo, ModifyCommentInfo, MainListInfo} from "../dto/Dto";
+import { LoginInfo ,SignInInfo , WritePostInfo, UserListRequestInfo, ModifyPostInfo, DeletePostInfo, ModifyUserInfo, AddParentCommentInfo, AddChildCommentInfo, ModifyCommentInfo, MainListInfo, ModifyRecruitInfo} from "../dto/Dto";
 import { getAccessToken, getRefreshToken } from "./TokenAction";
 
 
@@ -247,6 +247,26 @@ export const createModifyPostConfig = (requestBody: ModifyPostInfo): AxiosReques
     withCredentials: true,
   };
 
+  return config;
+};
+
+export const createModifyRecruitConfig = (requestBody: ModifyRecruitInfo): AxiosRequestConfig => {
+
+  const access = getAccessToken();
+  const refresh = getRefreshToken();
+
+  const config: AxiosRequestConfig = {
+    baseURL: 'http://54.180.21.153:8080', 
+    url: `/board/member/changeRecruit`,
+    method: 'PATCH',
+    headers: {
+      'Access_Token': access,
+      'Refresh_Token': refresh,
+      'Content-Type': 'application/json',
+    },
+    data: requestBody,
+    withCredentials: true,
+  };
   return config;
 };
 
