@@ -146,7 +146,7 @@ function Header({isLogin}:headerProps) {
       <Modal size={"narrow"} open={loginModal} onClose={() => setLoginModal(false)}>
       <div className="relative flex flex-col w-full h-full items-center b z-10 bg-white rounded-3xl">
         <div className='mt-5'>
-          <Btn className="mt-3 mb-3" size='small' txt='이미지'></Btn>
+          <Btn className="mt-3 mb-3" size='small' txt='StartStudy'></Btn>
         </div>
         <div className="flex mb-3 mt-8 flex-col w-4/5">
           <Input value={loginInfo.email}
@@ -167,7 +167,7 @@ function Header({isLogin}:headerProps) {
       </div>
       </Modal>
       {!isLogin && <div>
-        이미지
+        StartStudy
       </div>}
       <div className='flex-grow text-center'>
       <Btn category='outlined' className='mr-4' handleBtn={goMainPage} txt="메인" size="small"></Btn>
