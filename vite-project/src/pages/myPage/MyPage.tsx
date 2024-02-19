@@ -54,7 +54,7 @@ function MyPage() {
       // 이 외의 경우를 처리하거나 필요에 따라 빈 값으로 설정합니다.
       setRenderedComponent(null);
     }
-  }, [selectedInfoTabContent]);
+  }, [selectedInfoTabContent, role]);
 
   return (
     <MainLoyout>

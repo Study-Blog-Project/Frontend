@@ -53,13 +53,16 @@ function ModifyPostPage() {
 
 
   useEffect(() => {
-    const { title, content ,category} = location.state;
-    setModifyPostInfo({
-      ...ModifyPostInfo,
-      title: title,
-      content: content,
-      category:category,
-    });
+    console.log(location.state, 'location state');
+    if(location.state) {
+      const { title, content ,category} = location.state;
+      setModifyPostInfo({
+        ...ModifyPostInfo,
+        title: title,
+        content: content,
+        category:category,
+      });
+    }
   }, []);
 
   const goBack = () =>{
@@ -107,11 +110,11 @@ function ModifyPostPage() {
       <div className="w-auto">
         <SelectComponent defaultValue="모집중" onSelect={(value) => handleRecruitChange("recruit", value)} data={recruit}></SelectComponent>
       </div>
-      <div className="ml-8 w-auto">
+      <div className="ml-4 w-auto">
         <SelectComponent defaultValue="cs" onSelect={(value) => handleInputChange("category", value)} data={data}></SelectComponent>
       </div>
     </div>
-    <div className="w-full" >
+    <div className="w-full h-[400px]" >
       <HtmlEditor initialValue={ModifyPostInfo.content} onChange={(value) => handleInputChange("content", value)}></HtmlEditor>
     </div>
      <div className="flex justify-end pt-3 h-12 mr-3">

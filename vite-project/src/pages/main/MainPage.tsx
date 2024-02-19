@@ -99,6 +99,8 @@ function MainPage() {
       axios(config)
         .then((response) => {
           setBoardResponse(response.data);
+          // scroll to top slowly
+          window.scrollTo({ top: 0, behavior: "smooth" });
         })
         .catch((error) => {
           console.error(error);
@@ -254,16 +256,16 @@ function MainPage() {
 
   return (
     <MainLoyout>
-      <div className="flex justify-between">
+      <div className="flex justify-between w-full">
         <Tab onTabSelect={handleCategoryTabSelect} content={categoryList.map((x) => x.category)} defaultSelected={getCategory()}></Tab>
-        <Tab onTabSelect={handleOrderTabSelect} content={orderList.map((x) => x.order)} defaultSelected={getOrder()}></Tab>
+        <Tab className="justify-end" onTabSelect={handleOrderTabSelect} content={orderList.map((x) => x.order)} defaultSelected={getOrder()}></Tab>
       </div>
       <div className="flex justify-between space-x-2 mb-2">
         <Input onChange={(value) => handleInputChange(value)} size="full" placeHolder="팀프로젝트,코테,스터디를 검색해보세요!"></Input>
         <Btn handleBtn={submitSearchInfo} size="default" rounded={true} txt="검색"></Btn>
       </div>
       <div className="cursor-pointer">{boardResponse && PostDivs(boardResponse)}</div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center py-4">
         {boardResponse && <Pagination currentPage={Number(page)} totalPages={boardResponse.totalPages} onPageChange={handlePageChange}></Pagination>}
       </div>
     </MainLoyout>

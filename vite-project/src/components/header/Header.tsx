@@ -3,17 +3,18 @@ import Btn from '../button/Btn';
 import Modal from '../modal/Modal';
 import Input from '../input/Input';
 import { LoginInfo, SignInInfo } from '../dto/Dto';
-import { createSignInConfig ,createLogOutConfig} from '../state/AxiosModule';
+import {createSignInConfig, createLogOutConfig, createGetUserInfoConfig} from '../state/AxiosModule';
 import axios from 'axios';
 import { useAuthStore } from '../state/Login';
 import { useNavigate } from 'react-router-dom';
+import {getAccessToken} from "../state/TokenAction";
 
 
 interface headerProps{
   isLogin?:boolean
 }
 function Header({isLogin}:headerProps) {
-  const {logout,role} = useAuthStore();
+  const {logout,role, setAuth} = useAuthStore();
 
   const [loginModal, setLoginModal] = useState<boolean>(false);
   const [signInModal, setSigninModal] = useState<boolean>(false);
@@ -30,6 +31,24 @@ function Header({isLogin}:headerProps) {
     email: "",
     checkPwd: "",
   });
+
+  useEffect(() => {
+    if (!isLogin) {
+      const accessToken = getAccessToken();
+      if (accessToken) {
+        const config = createGetUserInfoConfig();
+        axios(config)
+          .then((response) => {
+            if (response.status === 200) {
+              setAuth(response.data);
+            }
+          })
+          .catch((err) => {
+            console.log(err, '로그인 정보 가져오기 실패');
+          })
+      }
+    }
+  }, [isLogin])
  
 
   const handleInputChange = (key: keyof SignInInfo, value: string) => {

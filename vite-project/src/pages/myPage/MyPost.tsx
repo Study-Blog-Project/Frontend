@@ -84,6 +84,7 @@ function MyPost({role}:PostProps){
 
 
   useEffect(()=>{
+    console.log("role:",role);
     if(role === "user"){
       fetchMyPosts({ recruit: selectedRecruitTabContent, category: selectedCategoryTabContent,order:0})
     }

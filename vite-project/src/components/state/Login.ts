@@ -5,18 +5,37 @@ import { LoginInfo } from "../dto/Dto";
 import { removeAccessToken, removeRefreshToken, setAccessToken, setNickName } from '../../components/state/TokenAction';
 import { setRefreshToken } from '../../components/state/TokenAction';
 
+// email
+// :
+// "test@gmail.com"
+// nickname
+// :
+// "test"
+// role
+// :
+// "ROLE_USER"
+// seq
+// :
+// 10
+// username
+// :
+// "TEST"
 interface AuthStore  {
   isLogin: boolean;
   email: string;
   login: (loginInfo: LoginInfo) => void;
   logout: () => void;
   role:"admin"|"user"|undefined;
+  setAuth: ({ email, nickname, role, username }: { email: string; nickname: string; role: string; username: string }) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
   isLogin: false,
   email: 'abcd1234@naver.com',
   role:undefined,
+  setAuth: ({ email, nickname, role, username }) => {
+    set({ isLogin: true, email, role: getRole(nickname) });
+  },
   login: async (loginInfo: LoginInfo) => {
     const config  = createLoginConfig(loginInfo);
     try {
@@ -35,12 +54,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         setAccessToken(accessToken);
         setRefreshToken(refreshToken)
         setNickName(nickName);
-        if(nickName === "admin"){
-          set({role:"admin"});
-          console.log("관리자계정으로 로그인하셨습니다!")
-        }else{
-          set({role:"user"});
-        }
+        set({role:getRole(nickName)});
+
         set({ isLogin: true });
         console.log('성공', response.data);
         
@@ -57,3 +72,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({ isLogin: false })},
 }));
 
+const getRole = (role:string) => {
+  if(role === "admin"){
+    return "admin";
+  }else{
+    return "user";
+  }
+}

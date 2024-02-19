@@ -34,15 +34,13 @@ function HtmlEditor({initialValue,onChange}:HtmlEditorProps) {
   };
 
   return (
-    <div>
-      <ReactQuill 
-      style={{ width: '100%', height: '100%' }}
-        theme="snow"
-        modules={modules}
-        value={content}
-        onChange={handleChange}
-      />
-    </div>
+    <ReactQuill
+    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+      theme="snow"
+      modules={modules}
+      value={content}
+      onChange={handleChange}
+    />
   );
 }
 

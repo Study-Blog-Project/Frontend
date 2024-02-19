@@ -1,4 +1,5 @@
 import  {useState, useRef, useEffect} from "react";
+import {HiChevronUpDown} from "react-icons/hi2";
 import Btn from "../button/Btn";
 
 
@@ -74,14 +75,14 @@ const SelectComponent = ({
 
     const renderSelect = (data: Option[]) => {
       return (
-        <div className={"flex flex-col z-10"}>
+        <div className={"flex flex-col z-10 absolute left-0 top-10 bg-white border rounded shadow w-[100px]"}>
           {data.map((item, index) => (
             <Btn
               key={index}
               buttonColor="white" 
               txtColor="black" 
               category="outlined"
-              size="big"
+              size="small"
               handleBtn={() => handleButtonClicked(item.value)}
               txt={item.label}
               className="mb-1"
@@ -95,26 +96,19 @@ const SelectComponent = ({
 
     return (
         <div
-            className={"z-10 w-full "}
+            className={"z-10 w-full relative min-w-[100px]"}
             onClick={handleOnclick}
             ref={containerRef}
         >
-          {onDefaultValue}
-            <div
-           
-                ref={inputRef}
-                onClick={(event) => {
-                    event.stopPropagation();
-                    handleOnclick();
-                }}
-            
-            />
+            <div className="border border-gray-400 text-gray-800 font-semibold border-[1px] text-sm rounded-lg py-1 px-2 flex justify-between items-center cursor-pointer select-none">
+                <span>{onDefaultValue}</span>
+                <HiChevronUpDown />
+            </div>
             {
               data &&
               isAppear &&
               (
-                  renderSelect(data)
-
+                renderSelect(data)
               )
             }
         </div>
