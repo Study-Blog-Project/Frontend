@@ -127,7 +127,7 @@ function Header({isLogin}:headerProps) {
     navigate("/admin/dashBoard");
   }
   const goMainPage = () =>{
-    navigate("/main");
+    navigate("/");
   }
   return (
     <div className='flex justify-between items-center px-2 py-2 mb-2'>
@@ -171,7 +171,7 @@ function Header({isLogin}:headerProps) {
           <Input value={loginInfo.email}
           onChange={(value) => handleLoginInputChange("email", value)} 
           size='full' className='mb-4' placeHolder={"이메일"}></Input>
-          <Input value={loginInfo.pwd}
+          <Input value={loginInfo.pwd}  type='password'
           onChange={(value) => handleLoginInputChange("pwd", value)} 
           size='full' placeHolder={"비밀번호"}></Input>
         </div>
@@ -185,11 +185,9 @@ function Header({isLogin}:headerProps) {
         </div>
       </div>
       </Modal>
-      {!isLogin && <div>
-        StartStudy
-      </div>}
+
       <div className='flex-grow text-center'>
-      <Btn category='outlined' className='mr-4' handleBtn={goMainPage} txt="메인" size="small"></Btn>
+      <Btn category='outlined' className='mr-4' handleBtn={goMainPage} txt="StartStudy" size="small"></Btn>
       </div>
       <div>
         {!isLogin && <div className='flex'>

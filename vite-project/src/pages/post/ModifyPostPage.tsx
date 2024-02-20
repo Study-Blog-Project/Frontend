@@ -9,6 +9,7 @@ import HtmlEditor from "../../components/htmlEditor/HtmlEditor";
 import Btn from "../../components/button/Btn";
 import { createModifyPostConfig, createModifyRecruitConfig } from "../../components/state/AxiosModule";
 import axios from "axios";
+import MainLoyout from "../../layout/MainLoyout";
 
 function ModifyPostPage() {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ function ModifyPostPage() {
   };
 
   return (
-    <div className="w-full h-full">
+    <MainLoyout>
     <div className="w-full flex justify-center py-4" >
       <Banner className="text-3xl font-black" title="프로젝트 모집 예시를 참고해 주세요."></Banner>
     </div>
@@ -121,7 +122,7 @@ function ModifyPostPage() {
       <Btn handleBtn={goBack} txt="취소" className="mr-3 w-16 " buttonColor="white" txtColor="black" size="small"></Btn>
       <Btn handleBtn={submitInfo} txt="수정"  className=" w-16 " size="small"></Btn>
      </div>
-   </div>
+    </MainLoyout>
   )
 }
 

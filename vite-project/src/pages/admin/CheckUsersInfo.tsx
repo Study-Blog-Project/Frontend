@@ -4,6 +4,7 @@ import axios from 'axios';
 import Input from '../../components/input/Input';
 import Btn from '../../components/button/Btn';
 import { UserResponseDto } from '../../components/dto/Dto';
+import MainLoyout from '../../layout/MainLoyout';
 
 function CheckUsersInfo() {
   const [nickName, setnickName] = useState("");
@@ -48,7 +49,7 @@ function CheckUsersInfo() {
   },[])
 
   return (
-    <div className="h-full w-full">
+<MainLoyout>
       <div className='flex justify-between space-x-2 mb-2 mx-4 my-4'>
         <Input onChange={(value) => handleInputChange(value)} ></Input>
         <Btn handleBtn={fetchSpecificiUserData} size="default" rounded={true} txt='검색'></Btn>
@@ -71,7 +72,7 @@ function CheckUsersInfo() {
           ))}
         </div>
       )}
-    </div>
+</MainLoyout>
   );
   
   
