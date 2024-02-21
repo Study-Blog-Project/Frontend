@@ -57,7 +57,7 @@ function Chip({ chipColor = "red", txt = "default", className = "" }: PinProps) 
         backgroundColor = "#F1DE08";
         txtColor="black";
         break;
-      case "etc":
+      case "기타":
         backgroundColor = "#30A9DE";
         break;
       case "코테":
