@@ -5,12 +5,20 @@ import MainLoyout from '../../layout/MainLoyout';
 import MyPost from './MyPost';
 import MyInfo from './MyInfo';
 import MyLikePost from './MyLikePost';
-import { useAuthStore } from '../../components/state/Login';
+
+
 
 function MyPage() {
   const [selectedInfoTabContent, setSelectedInfoTabContent] = useState<string>('내가 작성한 글');
-  const { role } = useAuthStore();
+  const params = location.href;
 
+  // useEffect(()=>{
+  //   if(params){
+  //     if(params.includes("dashBoard")){
+  //       isAllPost=true;
+  //     }
+  //   }
+  // },[params])
   //const [page,setPage] = useState<number>(0);
 
   const [renderedComponent, setRenderedComponent] = useState<JSX.Element | null>(null); 
@@ -32,11 +40,22 @@ function MyPage() {
 
 
   useEffect(() => {
+
     // 여기서 selectedInfoTabContent에 따라 렌더링될 컴포넌트를 설정합니다.
     if (selectedInfoTabContent === '내가 작성한 글') {
-      setRenderedComponent(
-        <MyPost role={role}></MyPost>
-      );
+      if(params){
+        if(params.includes("dashBoard")){
+          setRenderedComponent(
+            <MyPost isAllPost={true} />
+          );
+        }
+        else{
+          setRenderedComponent(
+            <MyPost isAllPost={false} />
+          );
+        }
+      }
+      
     } else if (selectedInfoTabContent === '사용자 정보') {
       setRenderedComponent(
         <div>
@@ -54,7 +73,7 @@ function MyPage() {
       // 이 외의 경우를 처리하거나 필요에 따라 빈 값으로 설정합니다.
       setRenderedComponent(null);
     }
-  }, [selectedInfoTabContent, role]);
+  }, [selectedInfoTabContent, params]);
 
   return (
     <MainLoyout>
