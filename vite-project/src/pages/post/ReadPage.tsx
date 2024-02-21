@@ -109,6 +109,8 @@ function ReadPage() {
     });
   };
   useEffect(()=>{
+    console.log(role)
+    console.log(isLogin)
     console.log(postResponse)
   },[postResponse])
   return (
@@ -132,9 +134,9 @@ function ReadPage() {
               {postResponse?.myBoard && <Btn handleBtn={removePost} buttonColor="headerBtn" txt="삭제" size="small"></Btn>}
             </div>
           )}
-          {postResponse?.myBoard && isLogin && role === "admin" && (
-            <div className="flex">
-              {postResponse?.myBoard && <Btn handleBtn={adminRemovePost} buttonColor="headerBtn" txt="관리자삭제" size="small"></Btn>}
+          {isLogin && role === "admin" && (
+            <div className="flex mr-3">
+              {<Btn handleBtn={adminRemovePost} buttonColor="headerBtn" txt="관리자삭제" size="small"></Btn>}
             </div>
           )}
           {isLogin && !postResponse?.myBoard && (
