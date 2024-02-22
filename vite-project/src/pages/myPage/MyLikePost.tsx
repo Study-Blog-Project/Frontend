@@ -75,10 +75,10 @@ function MyLikePost() {
 
   return (
     <>
-      <div className="w-full bg-red-100 h-24 border-2 border-gray-400 border-solid rounded-lg flex pl-6 items-center">
+      <div className="w-full  h-24 border-2 border-gray-400 border-solid rounded-lg flex pl-6 items-center">
           <Tab content={["전체", "모집중", "모집완료"]} onTabSelect={handleRecruitTabSelect} />
       </div>
-      <div className="w-full bg-green-100 h-24 flex pl-6 items-center justify-between border-b border-solid border-gray-400 ">
+      <div className="w-full  h-24 flex pl-6 items-center justify-between border-b border-solid border-gray-400 ">
         <Tab content={["전체", "코테", "프로젝트", "CS", "기타"]} onTabSelect={handleCategoryTabSelect} />
       </div>
       <div className="w-full flex flex-col">
