@@ -494,6 +494,23 @@ export const createPostLikePostConfig = (boardId:string): AxiosRequestConfig => 
   return config;
 };
 
+export const DeleteLikePostConfig = (postLikeId:string): AxiosRequestConfig => {
+  const access = getAccessToken();
+  const refresh = getRefreshToken();
+  const config: AxiosRequestConfig = {
+    baseURL: 'http://54.180.21.153:8080', 
+    url: `/postLike/${postLikeId}`,
+    method: 'DELETE',
+    headers: {
+      'Access_Token': access,
+      'Refresh_Token': refresh,
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+
+  return config;
+};
 
 export const createGetAllUsersInfoConfig = (username?:string): AxiosRequestConfig => {
 

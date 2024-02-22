@@ -11,6 +11,7 @@ import {
   createRemovePostConfig,
   createPostLikePostConfig,
   createAdminRemovePostConfig,
+  DeleteLikePostConfig,
 } from "../../components/state/AxiosModule";
 import { PostDto, AddParentCommentInfo } from "../../components/dto/Dto";
 import axios from "axios";
@@ -24,7 +25,6 @@ function ReadPage() {
   const { boardId } = useParams();
   const [postResponse, setPostResponse] = useState<PostDto | null>(null);
   const navigate = useNavigate();
-
   const [parentCommentInfo, setParentCommentInfo] = useState<AddParentCommentInfo>({
     boardId: Number(boardId),
     content: "",
@@ -38,7 +38,7 @@ function ReadPage() {
       const config = createReadPostConfig(boardId);
       try {
         const response = await axios(config);
-
+        
         if (response.data) {
           console.log(response.data);
           setPostResponse(response.data);
@@ -59,15 +59,39 @@ function ReadPage() {
   }, []);
 
   const handleLikePostBtn = async () => {
-    if (boardId) {
-      const config = createPostLikePostConfig(boardId);
-      try {
-        const response = await axios(config);
-        console.log(response);
-      } catch (error: unknown) {
-        console.log(error);
+    if(postResponse?.postLike === "관심"){
+      if (boardId) {
+        const config = createPostLikePostConfig(boardId);
+        console.log(config)
+        try {
+          const response = await axios(config);
+          console.log(response);
+          if(response.status === 200){
+            alert(response.data.message);
+            fetchData();
+          }
+        } catch (error: unknown) {
+          console.log(error);
+        }
       }
     }
+    else{
+      if (postResponse?.postLikeId) {
+        const config = DeleteLikePostConfig(postResponse?.postLikeId.toString());
+        console.log(config)
+        try {
+          const response = await axios(config);
+          console.log(response);
+          if(response.status === 200){
+            alert(response.data.message);
+            fetchData();
+          }
+        } catch (error: unknown) {
+          console.log(error);
+        }
+      }
+    }
+    
   };
   const removePost = async () => {
     if (boardId) {
@@ -141,7 +165,7 @@ function ReadPage() {
           )}
           {isLogin && !postResponse?.myBoard && (
             <div className="flex">
-              <Btn handleBtn={handleLikePostBtn} buttonColor="headerBtn" txt="관심" size="small"></Btn>
+              <Btn handleBtn={handleLikePostBtn} buttonColor="headerBtn" txt={postResponse?.postLike} size="small"></Btn>
             </div>
           )}
         </div>
@@ -154,7 +178,7 @@ function ReadPage() {
           <Input size="full" onChange={handleContentChange} placeHolder="댓글을 작성해보세요."></Input>
         </div>
         <div className="h-full py-4">
-          <Btn buttonColor="primary" onClick={() => handleRegisterButtonClick(parentCommentInfo, fetchData)} size="default" txt="등록"></Btn>
+          <Btn buttonColor="primary" onClick={() => handleRegisterButtonClick(parentCommentInfo, fetchData,false)} size="default" txt="등록"></Btn>
         </div>
       </div>
       {/* 댓글 목록 */}

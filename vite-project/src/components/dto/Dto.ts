@@ -102,6 +102,8 @@ export interface ReplyResponseDto {
 }
 
 export interface PostDto {
+  postLike:string;
+  postLikeId:number;
   recruit:string;
   title: string;
   userId: string;

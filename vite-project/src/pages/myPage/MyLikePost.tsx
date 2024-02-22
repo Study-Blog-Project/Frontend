@@ -22,6 +22,7 @@ function MyLikePost() {
       if (category === '전체') category = null;
       const config = createMyLikePostConfig({ recruit, category,order });
       console.log("recruit:",recruit,"category:", category,"order:",order )
+      console.log(config)
     axios(config)
       .then(response => {
           
